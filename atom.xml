@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xiaomogu.me/"/>
-  <updated>2018-02-10T15:59:12.928Z</updated>
+  <updated>2018-03-01T08:13:45.442Z</updated>
   <id>http://xiaomogu.me/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Git基础命令</title>
+    <link href="http://xiaomogu.me/2018/03/01/Git%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"/>
+    <id>http://xiaomogu.me/2018/03/01/Git基础命令/</id>
+    <published>2018-03-01T00:09:58.660Z</published>
+    <updated>2018-03-01T08:13:45.442Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p>初始化仓库    </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure></li><li><p>查看仓库日志</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure></li><li><p>查看仓库状态</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure></li><li><p>添加文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add filename</span><br></pre></td></tr></table></figure></li><li><p>添加所有文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add -A .</span><br></pre></td></tr></table></figure></li><li><p>提交</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m "&lt;commit message&gt;"</span><br></pre></td></tr></table></figure></li><li><p>添加远程仓库地址</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin &lt;repository URL&gt;</span><br></pre></td></tr></table></figure></li><li><p>推送到远程仓库</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master    // 注释:远程分支为origin，默认的本地分支为master，-u是记住提交参数，下次可以直接使用git push 进行提交</span><br></pre></td></tr></table></figure></li><li><p>拉取远程仓库</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master     // 注释:同上</span><br></pre></td></tr></table></figure></li><li><p>查看最近一次提交的更改</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff HEAD//注释:HEAD为指针,diff的另一个重要用途是查看已经暂存文件内的更改。记住，staged文件是我们告诉git已准备好提交的文件。</span><br></pre></td></tr></table></figure></li><li><p>取消暂存</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset &lt;filename&gt;//注释:从暂存区移除指定文件</span><br></pre></td></tr></table></figure></li><li><p>撤销</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -- &lt;filename&gt;//注释:重新检出某个文件，恢复为最后一次commit的状态</span><br></pre></td></tr></table></figure></li><li><p>创建分支</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch &lt;new_branch&gt;</span><br></pre></td></tr></table></figure></li><li><p>切换分支</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout &lt;branch&gt;</span><br></pre></td></tr></table></figure></li><li><p>创建并切换分支</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b &lt;new_branch&gt;   //注释:13、14两条命令的合并</span><br></pre></td></tr></table></figure></li><li><p>移除文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm '&lt;filename&gt;'//注释：此操作会同时从磁盘，暂存区移除指定文件</span><br></pre></td></tr></table></figure></li><li><p>合并分支到master</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge &lt;branch&gt;</span><br></pre></td></tr></table></figure></li><li><p>移除分支</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d &lt;branch&gt;</span><br></pre></td></tr></table></figure></li></ol><p>相关链接：</p><p><a href="https://try.github.io/levels/1/challenges/1" target="_blank" rel="noopener">try git</a></p><p><a href="https://git-scm.com/book/zh/v2" target="_blank" rel="noopener">Pro Git 中文版</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;初始化仓库    &lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td c
+      
+    
+    </summary>
+    
+      <category term="Git" scheme="http://xiaomogu.me/categories/Git/"/>
+    
+    
+      <category term="Git" scheme="http://xiaomogu.me/tags/Git/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
