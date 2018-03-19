@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Mybatis 初始化过程 | 蘑菇屋 | 一个蘑菇</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Mybatis">
+    <meta name="description" content="Mybatis 初始化过程  Mybatis的初始化就是将Mybatis的配置信息加载到Configuration这个类中，以便后面的使用。  Mybatis的初始化流程，下面是一段Mybatis从加载配置到执行SQL语句的完整过程的代码(该代码来自Mybatis的测试类)">
+<meta name="keywords" content="Mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis 初始化过程">
+<meta property="og:url" content="http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/index.html">
+<meta property="og:site_name" content="蘑菇屋">
+<meta property="og:description" content="Mybatis 初始化过程  Mybatis的初始化就是将Mybatis的配置信息加载到Configuration这个类中，以便后面的使用。  Mybatis的初始化流程，下面是一段Mybatis从加载配置到执行SQL语句的完整过程的代码(该代码来自Mybatis的测试类)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://orw70g1os.bkt.clouddn.com/1521025129.png">
+<meta property="og:image" content="http://orw70g1os.bkt.clouddn.com/1521026253.png">
+<meta property="og:image" content="http://orw70g1os.bkt.clouddn.com/1521026596.png">
+<meta property="og:updated_time" content="2018-03-19T14:29:45.096Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mybatis 初始化过程">
+<meta name="twitter:description" content="Mybatis 初始化过程  Mybatis的初始化就是将Mybatis的配置信息加载到Configuration这个类中，以便后面的使用。  Mybatis的初始化流程，下面是一段Mybatis从加载配置到执行SQL语句的完整过程的代码(该代码来自Mybatis的测试类)">
+<meta name="twitter:image" content="http://orw70g1os.bkt.clouddn.com/1521025129.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="蘑菇屋" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">树荫小蘑菇</h5>
+          <a href="mailto:sunylan94@gmail.com" title="sunylan94@gmail.com" class="mail">sunylan94@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                存档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/sunaowei" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Mybatis 初始化过程</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Mybatis 初始化过程</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-19T06:27:59.401Z" itemprop="datePublished" class="page-time">
+  2018-03-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Mybatis/">Mybatis</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Mybatis-初始化过程"><span class="post-toc-number">1.</span> <span class="post-toc-text">Mybatis 初始化过程</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Mybatis 初始化过程"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Mybatis 初始化过程</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-19 14:27:59" datetime="2018-03-19T06:27:59.401Z"  itemprop="datePublished">2018-03-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Mybatis/">Mybatis</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Mybatis-初始化过程"><a href="#Mybatis-初始化过程" class="headerlink" title="Mybatis 初始化过程"></a>Mybatis 初始化过程</h1><blockquote>
+<p> Mybatis的初始化就是将Mybatis的配置信息加载到<code>Configuration</code>这个类中，以便后面的使用。</p>
+</blockquote>
+<p>Mybatis的初始化流程，下面是一段Mybatis从加载配置到执行SQL语句的完整过程的代码(该代码来自Mybatis的测试类)</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://orw70g1os.bkt.clouddn.com/1521025129.png" alt="Mybatis测试代码1" title="">
+                </div>
+                <div class="image-caption">Mybatis测试代码1</div>
+            </figure>
+<p>下面我们来一步一步的分析</p>
+<ol>
+<li><p>读取配置文件</p>
+<p>我们可以看到首先使用的是<code>Resources</code>这个类读取的配置文件，以流的形式读取到程序中，返回一个<code>Reader</code>。</p>
+</li>
+<li><p>加载配置文件</p>
+<p>这一步将上面读取的<code>reader</code>作为参数传递给<code>SqlSessionFactoryBuilder</code>用于构建<code>SqlSessionFactory</code>。<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://orw70g1os.bkt.clouddn.com/1521026253.png" alt="SqlSessionFactoryBuilder" title="">
+                </div>
+                <div class="image-caption">SqlSessionFactoryBuilder</div>
+            </figure>该类提供了许多重载的方法供我们选择。</p>
+<p><img src="http://orw70g1os.bkt.clouddn.com/1521026596.png" alt=""></p>
+<p>此类的核心就是将我们传入的<code>Reader</code>或者<code>InputStream</code>通过<code>XMLConfigBuilder</code>类的<code>parse</code>方法，构造成<code>Configuration</code>，然后通过第91行的build方法，构造一个<code>SqlSessionFactory</code>并返回。</p>
+</li>
+<li><p>配置文件解析过程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">XMLConfigBuilder parser = <span class="keyword">new</span> XMLConfigBuilder(inputStream, environment, properties);</span><br><span class="line"><span class="keyword">return</span> build(parser.parse());</span><br></pre></td></tr></table></figure>
+<p>配置文件解析的入口就是在这里。根据读取配置文件时传入的<code>Reader</code>或者<code>InputStream</code>分别调用<code>XMLConfigBuilder</code>不同的构造器，实例化出<code>XMLConfigBuilder</code>,然后调用<code>XMLConfigBuilder</code>类中的<code>parse()</code>方法,构造出我们需要的<code>Configuration</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">XMLConfigBuilder</span><span class="params">(InputStream inputStream, String environment, Properties props)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>(<span class="keyword">new</span> XPathParser(inputStream, <span class="keyword">true</span>, props, <span class="keyword">new</span> XMLMapperEntityResolver()), environment, props);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是构建<code>XMLConfigBuilder</code>的具体方法。这个地方的构造过程如下</p>
+<ul>
+<li><p>先实例化<code>XMLMapperEntityResolver</code>,然后将其作为实例化<code>XPathParser</code>的参数之一，最后实例化<code>XMLConfigBuilder</code></p>
+</li>
+<li><p>实例化<code>XMLMapperEntityResolver</code>的过程很简单，调用的是其无参构造函数，<code>XMLMapperEntityResolver</code>里面包含了一些Mybatis的DTD。该类对外暴露了一个<code>public InputSource resolveEntity(String publicId, String systemId)</code>的方法，用于寻找根据<code>publicId</code>和<code>systemId</code>,寻找对应的DTD文件。</p>
+</li>
+<li><p>实例化<code>XPathParser</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">XPathParser</span><span class="params">(InputStream inputStream, <span class="keyword">boolean</span> validation, Properties variables, EntityResolver entityResolver)</span> </span>&#123;</span><br><span class="line">  commonConstructor(validation, variables, entityResolver);</span><br><span class="line">  <span class="keyword">this</span>.document = createDocument(<span class="keyword">new</span> InputSource(inputStream));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>inputStream</code>就是我们传入的配置文件的流的信息，entityResolver是我们刚刚实例化的<code>XMLMapperEntityResolver</code>。首先调用了<code>commonConstructor</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">commonConstructor</span><span class="params">(<span class="keyword">boolean</span> validation, Properties variables, EntityResolver entityResolver)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.validation = validation;</span><br><span class="line">  <span class="keyword">this</span>.entityResolver = entityResolver;</span><br><span class="line">  <span class="keyword">this</span>.variables = variables;</span><br><span class="line">   <span class="comment">// 实例化一个XPath工厂，用于生产XPath</span></span><br><span class="line">  XPathFactory factory = XPathFactory.newInstance();</span><br><span class="line">  <span class="keyword">this</span>.xpath = factory.newXPath();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行完<code>commonConstructor</code>之后就是创建<code>Document</code>了,这一块没啥重点，解析XML成Document对象而已。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Document <span class="title">createDocument</span><span class="params">(InputSource inputSource)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// important: this must only be called AFTER common constructor</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 创建一个用于创建DocumentBuilder的工厂，并给工厂设置一些参数</span></span><br><span class="line">    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span><br><span class="line">    factory.setValidating(validation);</span><br><span class="line"></span><br><span class="line">    factory.setNamespaceAware(<span class="keyword">false</span>);</span><br><span class="line">    factory.setIgnoringComments(<span class="keyword">true</span>);</span><br><span class="line">    factory.setIgnoringElementContentWhitespace(<span class="keyword">false</span>);</span><br><span class="line">    factory.setCoalescing(<span class="keyword">false</span>);</span><br><span class="line">    factory.setExpandEntityReferences(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过工厂创建一个用于创建Document的builder</span></span><br><span class="line">    DocumentBuilder builder = factory.newDocumentBuilder();</span><br><span class="line">    <span class="comment">// 设置一些参数</span></span><br><span class="line">    builder.setEntityResolver(entityResolver);</span><br><span class="line">    builder.setErrorHandler(<span class="keyword">new</span> ErrorHandler() &#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">error</span><span class="params">(SAXParseException exception)</span> <span class="keyword">throws</span> SAXException </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> exception;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fatalError</span><span class="params">(SAXParseException exception)</span> <span class="keyword">throws</span> SAXException </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> exception;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">warning</span><span class="params">(SAXParseException exception)</span> <span class="keyword">throws</span> SAXException </span>&#123;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// 解析输入的流创建Document</span></span><br><span class="line">    <span class="keyword">return</span> builder.parse(inputSource);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> BuilderException(<span class="string">"Error creating document instance.  Cause: "</span> + e, e);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>都创建完了，我们再回到真正执行<code>XMLConfigBuilder</code>创建的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">XMLConfigBuilder</span><span class="params">(XPathParser parser, String environment, Properties props)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过父类调用Configuration的无参构造方法</span></span><br><span class="line">  <span class="keyword">super</span>(<span class="keyword">new</span> Configuration());</span><br><span class="line">  ErrorContext.instance().resource(<span class="string">"SQL Mapper Configuration"</span>);</span><br><span class="line">  <span class="keyword">this</span>.configuration.setVariables(props);</span><br><span class="line">  <span class="comment">// 确保只执行一次，调用parse()方法时，会将其设置为true</span></span><br><span class="line">  <span class="keyword">this</span>.parsed = <span class="keyword">false</span>;</span><br><span class="line">  <span class="keyword">this</span>.environment = environment;</span><br><span class="line">  <span class="comment">// 这个是重点，后面会用到</span></span><br><span class="line">  <span class="keyword">this</span>.parser = parser;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至于<code>new Configuration()</code>具体干了啥，我们可以看一下源码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Configuration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"JDBC"</span>, JdbcTransactionFactory.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"MANAGED"</span>, ManagedTransactionFactory.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"JNDI"</span>, JndiDataSourceFactory.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"POOLED"</span>, PooledDataSourceFactory.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"UNPOOLED"</span>, UnpooledDataSourceFactory.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"PERPETUAL"</span>, PerpetualCache.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"FIFO"</span>, FifoCache.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"LRU"</span>, LruCache.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"SOFT"</span>, SoftCache.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"WEAK"</span>, WeakCache.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"DB_VENDOR"</span>, VendorDatabaseIdProvider.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"XML"</span>, XMLLanguageDriver.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"RAW"</span>, RawLanguageDriver.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"SLF4J"</span>, Slf4jImpl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"COMMONS_LOGGING"</span>, JakartaCommonsLoggingImpl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"LOG4J"</span>, Log4jImpl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"LOG4J2"</span>, Log4j2Impl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"JDK_LOGGING"</span>, Jdk14LoggingImpl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"STDOUT_LOGGING"</span>, StdOutImpl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"NO_LOGGING"</span>, NoLoggingImpl.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"CGLIB"</span>, CglibProxyFactory.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"JAVASSIST"</span>, JavassistProxyFactory.class);</span><br><span class="line"></span><br><span class="line">  languageRegistry.setDefaultDriverClass(XMLLanguageDriver.class);</span><br><span class="line">  languageRegistry.register(RawLanguageDriver.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，这个无参的构造方法主要是注册了一系列的别名，这个我们另行分析，我们先往下看。</p>
+</li>
+<li><p><code>XMLConfigBuilder</code>实例化完成以后就是调用其parse()方法完成一系列配置文件的解析，和对Configuration的装配。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Configuration <span class="title">parse</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 保证只被解析一次。</span></span><br><span class="line">  <span class="keyword">if</span> (parsed) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> BuilderException(<span class="string">"Each XMLConfigBuilder can only be used once."</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  parsed = <span class="keyword">true</span>;</span><br><span class="line">  <span class="comment">// 解析根节点(至于这个evalNode是如何执行的，可以参照XPath解析xml相关的文章)</span></span><br><span class="line">  XNode xNode = parser.evalNode(<span class="string">"/configuration"</span>);</span><br><span class="line">  <span class="comment">// 解析根节点下面的子节点</span></span><br><span class="line">  parseConfiguration(xNode);</span><br><span class="line">  <span class="keyword">return</span> configuration;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">parseConfiguration</span><span class="params">(XNode root)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">     <span class="comment">//issue #117 read properties first</span></span><br><span class="line">     propertiesElement(root.evalNode(<span class="string">"properties"</span>));</span><br><span class="line">     Properties settings = settingsAsProperties(root.evalNode(<span class="string">"settings"</span>));</span><br><span class="line">     loadCustomVfs(settings);</span><br><span class="line">     typeAliasesElement(root.evalNode(<span class="string">"typeAliases"</span>));</span><br><span class="line">     pluginElement(root.evalNode(<span class="string">"plugins"</span>));</span><br><span class="line">     objectFactoryElement(root.evalNode(<span class="string">"objectFactory"</span>));</span><br><span class="line">     objectWrapperFactoryElement(root.evalNode(<span class="string">"objectWrapperFactory"</span>));</span><br><span class="line">     reflectorFactoryElement(root.evalNode(<span class="string">"reflectorFactory"</span>));</span><br><span class="line">     settingsElement(settings);</span><br><span class="line">     <span class="comment">// read it after objectFactory and objectWrapperFactory issue #631</span></span><br><span class="line">     environmentsElement(root.evalNode(<span class="string">"environments"</span>));</span><br><span class="line">     databaseIdProviderElement(root.evalNode(<span class="string">"databaseIdProvider"</span>));</span><br><span class="line">     typeHandlerElement(root.evalNode(<span class="string">"typeHandlers"</span>));</span><br><span class="line">     mapperElement(root.evalNode(<span class="string">"mappers"</span>));</span><br><span class="line">   &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">     <span class="keyword">throw</span> <span class="keyword">new</span> BuilderException(<span class="string">"Error parsing SQL Mapper Configuration. Cause: "</span> + e, e);</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>这是解析Configuration下面的11个子节点，并装配到Configuration中，具体解析过程可以点进去详细查看。</p>
+<p>执行完整个parse()的过程，返回<code>Configuration</code>整个初始化流程也就结束了。</p>
+</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-03-19T14:29:45.096Z" itemprop="dateUpdated">2018-03-19 22:29:45</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://xiaomogu.me">
+            <img src="/img/avatar.jpg" alt="树荫小蘑菇">
+            树荫小蘑菇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mybatis/">Mybatis</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/&title=《Mybatis 初始化过程》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/&title=《Mybatis 初始化过程》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mybatis 初始化过程》 — 蘑菇屋&url=http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/&via=http://xiaomogu.me" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/01/Git基础命令/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Git基础命令</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢您的支持🙏~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>树荫小蘑菇 &copy; 2017 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">冀ICP备18001208号</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/&title=《Mybatis 初始化过程》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/&title=《Mybatis 初始化过程》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mybatis 初始化过程》 — 蘑菇屋&url=http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/&via=http://xiaomogu.me" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/03/19/Mybatis 初始化过程/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3awY7DIAxF0f7/T2e2lTqh92FSCXNZVWkmcFLJA7ZfLzyutzG+fn2M9+vk8+csy4YMGTK2ZVzDwRe36nWM572lypAh4wDG3ZQkLJI7yVL4a5IhQ4aM8eJSTLpQGTJkyFgbcAkmDdYyZMiQUTnEkhBJpqwk7xacxWXIkLEhg6fJfv/5kfqGDBkytmJc4SBhNA3lC1YlQ4aM1gwe4Pj0c0E8fY4MGTJOY1TS/avScHPH3UApQ4aMzRk8fZ9eGW/45tZwi5EhQ0ZTxtrHkUNsWopA20cZMmQcwKgfPvlS4v8GJHDLkCGjNYMfXNdWStPD8LLztwwZMrZl8LT7XGDl06c5wvj3kSFDxoYMouSBr97mxUPtPztcGTJktGbMTc/DcboFJC8rPr7KkCGjNaPSNjEXmuNmWRkyZLRm8AfxzRwPlHOvDNVjZciQ0YjBmy2CXF14D2nC+DKLDBkyDmCkzWG8qYu3XMw1WwR1DBkyZGzLqLRBPL2gUtCXIUNGOwZPlk0mwsK/XXAWlyFDRlNGmghbW9QsAWTIkHEYgzRA8KaxtAV2Lj0nQ4aM3owrHOkhc7xo/u0XqgwZMloz+OBlgHrirLRBlCFDRlNGvSSZBnFeQJUhQ4YMnsqf25alTRv8mcEXMmTIOJJRLw/UywwyZMiQQRi85MmT/pW2DBkyZJzAqKTynyhPxvfLkCGjNWPu6EiSbukiCL50tJYhQ8Z+jD9KcuTz+SBd4AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '(つェ⊂)咦!人呢？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
