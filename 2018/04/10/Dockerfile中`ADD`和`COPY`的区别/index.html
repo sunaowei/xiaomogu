@@ -24,25 +24,25 @@ ga('send', 'pageview');
     
     
     
-    <title>Dockerfile 导入证书到JAVA的秘钥库中 | 蘑菇屋 | 一个蘑菇</title>
+    <title>Dockerfile中`ADD`和`COPY`的区别 | 蘑菇屋 | 一个蘑菇</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content="Docker,Dockerfile">
-    <meta name="description" content="Dockerfile 导入证书到JAVA的秘钥库中目的:将已有的CA证书导入到通过Dockerfile导入到JAVA的秘钥库中。 12345678FROM custom/oraclejdk:8-jre8COPY ./tomcat.cer /tomcat.cerRUN $JAVA_HOME/bin/keytool -storepasswd -new mysecretpassword -keystor">
+    <meta name="description" content="Dockerfile中ADD和COPY的区别 本文来自Best practices for writing Dockerfiles  建议编写Dockerfile前先熟读上文 Dockerfile 中提供了两种复制文件的方式：ADD和COPY，这两种方式有什么区别呢？这两者分别在什么时候使用呢? ADD和COPY功能相似，COPY是首选。因为它比ADD更加透明.COPY仅支持基础的本地文件拷贝到容">
 <meta name="keywords" content="Docker,Dockerfile">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dockerfile 导入证书到JAVA的秘钥库中">
-<meta property="og:url" content="http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/index.html">
+<meta property="og:title" content="Dockerfile中`ADD`和`COPY`的区别">
+<meta property="og:url" content="http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/index.html">
 <meta property="og:site_name" content="蘑菇屋">
-<meta property="og:description" content="Dockerfile 导入证书到JAVA的秘钥库中目的:将已有的CA证书导入到通过Dockerfile导入到JAVA的秘钥库中。 12345678FROM custom/oraclejdk:8-jre8COPY ./tomcat.cer /tomcat.cerRUN $JAVA_HOME/bin/keytool -storepasswd -new mysecretpassword -keystor">
+<meta property="og:description" content="Dockerfile中ADD和COPY的区别 本文来自Best practices for writing Dockerfiles  建议编写Dockerfile前先熟读上文 Dockerfile 中提供了两种复制文件的方式：ADD和COPY，这两种方式有什么区别呢？这两者分别在什么时候使用呢? ADD和COPY功能相似，COPY是首选。因为它比ADD更加透明.COPY仅支持基础的本地文件拷贝到容">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-04-10T09:09:33.375Z">
+<meta property="og:updated_time" content="2018-04-10T09:35:34.323Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dockerfile 导入证书到JAVA的秘钥库中">
-<meta name="twitter:description" content="Dockerfile 导入证书到JAVA的秘钥库中目的:将已有的CA证书导入到通过Dockerfile导入到JAVA的秘钥库中。 12345678FROM custom/oraclejdk:8-jre8COPY ./tomcat.cer /tomcat.cerRUN $JAVA_HOME/bin/keytool -storepasswd -new mysecretpassword -keystor">
+<meta name="twitter:title" content="Dockerfile中`ADD`和`COPY`的区别">
+<meta name="twitter:description" content="Dockerfile中ADD和COPY的区别 本文来自Best practices for writing Dockerfiles  建议编写Dockerfile前先熟读上文 Dockerfile 中提供了两种复制文件的方式：ADD和COPY，这两种方式有什么区别呢？这两者分别在什么时候使用呢? ADD和COPY功能相似，COPY是首选。因为它比ADD更加透明.COPY仅支持基础的本地文件拷贝到容">
     
         <link rel="alternate" type="application/atom+xml" title="蘑菇屋" href="/atom.xml">
     
@@ -123,7 +123,7 @@ ga('send', 'pageview');
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Dockerfile 导入证书到JAVA的秘钥库中</div>
+        <div class="flex-col header-title ellipsis">Dockerfile中`ADD`和`COPY`的区别</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -145,10 +145,10 @@ ga('send', 'pageview');
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Dockerfile 导入证书到JAVA的秘钥库中</h1>
+        <h1 class="title">Dockerfile中`ADD`和`COPY`的区别</h1>
         <h5 class="subtitle">
             
-                <time datetime="2018-04-10T01:07:41.652Z" itemprop="datePublished" class="page-time">
+                <time datetime="2018-04-10T09:34:54.000Z" itemprop="datePublished" class="page-time">
   2018-04-10
 </time>
 
@@ -170,18 +170,18 @@ ga('send', 'pageview');
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Dockerfile-导入证书到JAVA的秘钥库中"><span class="post-toc-number">1.</span> <span class="post-toc-text">Dockerfile 导入证书到JAVA的秘钥库中</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Dockerfile中ADD和COPY的区别"><span class="post-toc-number">1.</span> <span class="post-toc-text">Dockerfile中ADD和COPY的区别</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-Dockerfile 导入证书到JAVA的秘钥库中"
+<article id="post-Dockerfile中`ADD`和`COPY`的区别"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Dockerfile 导入证书到JAVA的秘钥库中</h1>
+        <h1 class="post-card-title">Dockerfile中`ADD`和`COPY`的区别</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-04-10 09:07:41" datetime="2018-04-10T01:07:41.652Z"  itemprop="datePublished">2018-04-10</time>
+            <time class="post-time" title="2018-04-10 17:34:54" datetime="2018-04-10T09:34:54.000Z"  itemprop="datePublished">2018-04-10</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Docker/">Docker</a></li></ul>
@@ -196,17 +196,18 @@ ga('send', 'pageview');
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="Dockerfile-导入证书到JAVA的秘钥库中"><a href="#Dockerfile-导入证书到JAVA的秘钥库中" class="headerlink" title="Dockerfile 导入证书到JAVA的秘钥库中"></a>Dockerfile 导入证书到JAVA的秘钥库中</h1><p>目的:将已有的CA证书导入到通过Dockerfile导入到JAVA的秘钥库中。</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> custom/oraclejdk:<span class="number">8</span>-jre8</span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span> ./tomcat.cer /tomcat.cer</span><br><span class="line"></span><br><span class="line">RUN $JAVA_HOME/bin/keytool -storepasswd -new mysecretpassword -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit  &amp;&amp; \</span><br><span class="line">	echo 'yes' | $JAVA_HOME/bin/keytool -import -alias passport.sso.com -keystore $&#123;JAVA_HOME&#125;/jre/lib/security/cacerts -file /tomcat.cer -trustcacerts  -storepass mysecretpassword</span><br><span class="line">COPY ./uums.jar /home/uums.jar</span><br><span class="line">CMD ["java","-Dspring.profiles.active=test","-jar","/home/uums.jar"]</span><br></pre></td></tr></table></figure>
-<p>解释：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span>JAVA_HOME/bin/keytool -storepasswd -new mysecretpassword -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit</span><br></pre></td></tr></table></figure>
-<p>上面这句话的目的是将<code>changeit</code>这个密码存储到秘钥库中</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 'yes' | $JAVA_HOME/bin/keytool -import -alias passport.sso.com -keystore $&#123;JAVA_HOME&#125;/jre/lib/security/cacerts -file /tomcat.cer -trustcacerts  -storepass mysecretpassword</span><br></pre></td></tr></table></figure>
-<p>此处是导入证书，<code>-storepass mysecretpassword</code>,这句话是指定我们上一步存储的密码名称。这一行如果单独执行的话是需要输入<code>yes</code>来信任该证书的，我们可以通过<code>echo &#39;yes&#39;</code>这种写法来实现<code>yes</code>的自动输入。</p>
-<p>参考：</p>
-<p><a href="https://rootsquash.com/2016/05/02/inserting-certificates-into-java-keystore-via-dockerfile/" target="_blank" rel="noopener">Inserting certificates into Java keystore via Dockerfile</a></p>
-<p><a href="https://blog.csdn.net/tony1130/article/details/5134318" target="_blank" rel="noopener">java中Keytool的使用总结</a></p>
-
+            <h1 id="Dockerfile中ADD和COPY的区别"><a href="#Dockerfile中ADD和COPY的区别" class="headerlink" title="Dockerfile中ADD和COPY的区别"></a>Dockerfile中<code>ADD</code>和<code>COPY</code>的区别</h1><blockquote>
+<p>本文来自<a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/" target="_blank" rel="noopener">Best practices for writing Dockerfiles</a></p>
+</blockquote>
+<p>建议编写Dockerfile前先熟读上文</p>
+<p>Dockerfile 中提供了两种复制文件的方式：<code>ADD</code>和<code>COPY</code>，这两种方式有什么区别呢？这两者分别在什么时候使用呢?</p>
+<p><code>ADD</code>和<code>COPY</code>功能相似，<code>COPY</code>是首选。因为它比<code>ADD</code>更加透明.<code>COPY</code>仅支持基础的本地文件拷贝到容器中，<code>ADD</code>有些特性(本地tar包解压和远程URL支持) ，这些特性并不是很明显。<code>ADD</code>最好的应用是本地tar包自动解压到镜像中，如<code>ADD rootfs.tar.xz /</code>。</p>
+<p>如果我们在<code>Dockerfile</code>中有多个步骤使用不同文件，逐个<code>COPY</code>这些文件，而不是拷贝所有文件。这样确保每步骤的缓存会还重新更新。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">COPY requirements.txt /tmp/</span><br><span class="line">RUN pip install --requirement /tmp/requirements.txt</span><br><span class="line">COPY . /tmp/</span><br></pre></td></tr></table></figure>
+<p>出于镜像大小考虑，强烈不建议使用<code>ADD</code>获取远程URL地址的包，我们应该使用curl或者wget替代。这样我们可以在解压后删除不用的文件，而不必添加到镜像的另一层。我们避免使用如下形式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ADD http://example.com/big.tar.xz /usr/src/things/</span><br><span class="line">RUN tar -xJf /usr/src/things/big.tar.xz -C /usr/src/things</span><br><span class="line">RUN make -C /usr/src/things all</span><br></pre></td></tr></table></figure>
+<p>应该替换成如下形式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RUN mkdir -p /usr/src/things \</span><br><span class="line">    &amp;&amp; curl -SL http://example.com/big.tar.xz \</span><br><span class="line">    | tar -xJC /usr/src/things \</span><br><span class="line">    &amp;&amp; make -C /usr/src/things all</span><br></pre></td></tr></table></figure>
         </div>
 
         <blockquote class="post-copyright">
@@ -214,7 +215,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-04-10T09:09:33.375Z" itemprop="dateUpdated">2018-04-10 17:09:33</time>
+    Last updated: <time datetime="2018-04-10T09:35:34.323Z" itemprop="dateUpdated">2018-04-10 17:35:34</time>
 </span><br>
 
 
@@ -248,7 +249,7 @@ ga('send', 'pageview');
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&title=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -258,22 +259,22 @@ ga('send', 'pageview');
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&title=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&via=http://xiaomogu.me" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&via=http://xiaomogu.me" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -293,21 +294,14 @@ ga('send', 'pageview');
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Dockerfile中`ADD`和`COPY`的区别</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/03/19/Mybatis 初始化过程/" id="post-next" class="post-nav-link">
+      <a href="/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Mybatis 初始化过程</h4>
+        <h4 class="title">Dockerfile 导入证书到JAVA的秘钥库中</h4>
       </a>
     </div>
   
@@ -403,7 +397,7 @@ ga('send', 'pageview');
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&title=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -413,22 +407,22 @@ ga('send', 'pageview');
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&title=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&via=http://xiaomogu.me" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&via=http://xiaomogu.me" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -439,7 +433,7 @@ ga('send', 'pageview');
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3awU7rQAwFUP7/p4vECgmaXtvjNouTFXrkJXOyGJvr+fqKr8fP9fvnv/+S3Hn95OvnXz9ndOHh4eG1lv7sugZcv/7Zgq7fkq/h+n48PDy8bV5SDPK9N1luUh6q68HDw8O7G2+yxKQh7jXueHh4eHfm5S9OWvDqu/Dw8PDuxkuCgGpMkBeVJOZYz1rw8PDwYl5vAPbZn9fne3h4eHitqfp7RmJ5811eJx4eHt4Cr3ekqXfo6tQhqjyYwMPDw9vgVYPRXqwwPy7QHMXh4eHhrfF67W8Stub3zAdsL5ppPDw8vKMTqOqgK/9trxWuFpIXhQoPDw/vKC9fevmbxeP/alxbKF14eHh4C7wDf/AXS8LkmFT1LXh4eHgbvBxWDRHy+dvGk/Hw8PDeyes1tXnMmsSyxw514eHh4a3xopNZgzY3P14wiSr+eQ4eHh7eAi9Zbh7CVu/PP9m8QcfDw8M7xasOlnqt7WSLz4tK+S8GPDw8vAGvOuyvLisZoVWHalFsgYeHh7fMOzXIr0bD1SNfSel6mrXg4eHhLfDy4VZvE++Fv7378fDw8LZ5vSa7uWVXm+O4BcfDw8N7D68XrVZb5GpU0WO/GIDh4eHhjXnViKHXak8y1SSkKAQZeHh4eEd51dBhMkLL/2/vo+Ph4eF9ijfZoHtHAfIWPPlMeHh4eHu8autcPVA1iTCq0W2hJODh4eGNeflWuxH1TkLeawseHh7eWd6jeE2oeYt8LCLBw8PDW+BVN9w8ii1Xp+K78lYbDw8Pb4OXFIPqUaezjXW1MES1Cw8PD2/M643EJvFE0mr3ShceHh7ePXnJcqvHCF5s8cVihoeHh3cHXn4YqxfOJrt6/kHx8PDwtnnVyKDXTJ96Wh4K4+Hh4W3wegOwvQAib9B77TgeHh7egPcNR5lBBWI84GcAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3a0WojMQwF0P7/T2dhnxaWTu6V7JLCmaeSBI+PC5aQ9PUVP6+/z3d///tJvtr/z/O37Vu+8PDw8K7xkuW++yT59vmYcszwCPDw8PCu8dqtPK/QXuXt1pM94+Hh4X0Cr6U+/ybZbrIfPDw8vN/CS1aYFS82x4GHh4f3k7w2hX3e6CYFT471Sq0FDw8P70IX6XP+/tH+Hh4eHl4cEmaXdZ5k52n6a/Tg4eHh3eDl6Wx+9+Ypdbv+8Jd4eHh4l3ntJZ4HjxzZFjje/GPw8PDwrvHaxlX+sqSAOxsRiN6Oh4eHd4F3alBgHwzaEFXsEA8PD+8ary3LtqXbdsQqLwe/KVjg4eHhHeLNAJtW2WZMqi4N4+Hh4V3g5WXZtil1aqSg3WH0P8TDw8Nb8DYF3LMlhra1FpVL8PDw8C7z8iVmgSFvVu3T7uLk8PDw8Ereplk1a+0niXW+9Shxx8PDwzvKa1tW7WWdhIQkDLRDXXh4eHj3eLNywKbN3xY+klT7TeDBw8PDO8rblxvaMYLZpZ8XLL6Ne3h4eHhHeW17aTYQkB/cqQQdDw8P7zYvQW4Yw3x/M7aFh4eHd4HXlm737bH8233hGA8PD+8eb3NB54NTz5tok+yiZIyHh4d3jZe/uCgHxKElmQ4bHjceHh7eUV6y0QSQF3mTonA7BBbVWvDw8PCu8faJb35A+abbEBUVXvDw8PBGvPZqfmbkyXGyzixg4OHh4d3mvconHyPYdOE2oeXNZAQeHh7emjdrOOVJcBGXghR5swc8PDy8s7w2GGyKv23Bt12tTqzx8PDwFrxZE2tWbpiNDuSBBw8PD+9zeMklngeDZIhqUwLGw8PD+xzerNmflBLaN0af4+Hh4V3jzZpep6rF7SBCXvzFw8PDu8GbNcBODRxsfrMfYsDDw8MreX8AABENAVYreK4AAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
