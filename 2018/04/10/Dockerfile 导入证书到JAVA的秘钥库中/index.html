@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-116739796-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>Dockerfile 导入证书到JAVA的秘钥库中 | 蘑菇屋 | 一个蘑菇</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Docker,Dockerfile">
+    <meta name="description" content="Dockerfile 导入证书到JAVA的秘钥库中目的:将已有的CA证书导入到通过Dockerfile导入到JAVA的秘钥库中。 12345678FROM custom/oraclejdk:8-jre8COPY ./tomcat.cer /tomcat.cerRUN $JAVA_HOME/bin/keytool -storepasswd -new mysecretpassword -keystor">
+<meta name="keywords" content="Docker,Dockerfile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dockerfile 导入证书到JAVA的秘钥库中">
+<meta property="og:url" content="http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/index.html">
+<meta property="og:site_name" content="蘑菇屋">
+<meta property="og:description" content="Dockerfile 导入证书到JAVA的秘钥库中目的:将已有的CA证书导入到通过Dockerfile导入到JAVA的秘钥库中。 12345678FROM custom/oraclejdk:8-jre8COPY ./tomcat.cer /tomcat.cerRUN $JAVA_HOME/bin/keytool -storepasswd -new mysecretpassword -keystor">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:updated_time" content="2018-04-10T09:09:33.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dockerfile 导入证书到JAVA的秘钥库中">
+<meta name="twitter:description" content="Dockerfile 导入证书到JAVA的秘钥库中目的:将已有的CA证书导入到通过Dockerfile导入到JAVA的秘钥库中。 12345678FROM custom/oraclejdk:8-jre8COPY ./tomcat.cer /tomcat.cerRUN $JAVA_HOME/bin/keytool -storepasswd -new mysecretpassword -keystor">
+    
+        <link rel="alternate" type="application/atom+xml" title="蘑菇屋" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">树荫小蘑菇</h5>
+          <a href="mailto:sunylan94@gmail.com" title="sunylan94@gmail.com" class="mail">sunylan94@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                存档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/sunaowei" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Dockerfile 导入证书到JAVA的秘钥库中</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Dockerfile 导入证书到JAVA的秘钥库中</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-10T01:07:41.652Z" itemprop="datePublished" class="page-time">
+  2018-04-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Docker/">Docker</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Dockerfile-导入证书到JAVA的秘钥库中"><span class="post-toc-number">1.</span> <span class="post-toc-text">Dockerfile 导入证书到JAVA的秘钥库中</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Dockerfile 导入证书到JAVA的秘钥库中"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Dockerfile 导入证书到JAVA的秘钥库中</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-10 09:07:41" datetime="2018-04-10T01:07:41.652Z"  itemprop="datePublished">2018-04-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Docker/">Docker</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Dockerfile-导入证书到JAVA的秘钥库中"><a href="#Dockerfile-导入证书到JAVA的秘钥库中" class="headerlink" title="Dockerfile 导入证书到JAVA的秘钥库中"></a>Dockerfile 导入证书到JAVA的秘钥库中</h1><p>目的:将已有的CA证书导入到通过Dockerfile导入到JAVA的秘钥库中。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> custom/oraclejdk:<span class="number">8</span>-jre8</span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span> ./tomcat.cer /tomcat.cer</span><br><span class="line"></span><br><span class="line">RUN $JAVA_HOME/bin/keytool -storepasswd -new mysecretpassword -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit  &amp;&amp; \</span><br><span class="line">	echo 'yes' | $JAVA_HOME/bin/keytool -import -alias passport.sso.com -keystore $&#123;JAVA_HOME&#125;/jre/lib/security/cacerts -file /tomcat.cer -trustcacerts  -storepass mysecretpassword</span><br><span class="line">COPY ./uums.jar /home/uums.jar</span><br><span class="line">CMD ["java","-Dspring.profiles.active=test","-jar","/home/uums.jar"]</span><br></pre></td></tr></table></figure>
+<p>解释：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span>JAVA_HOME/bin/keytool -storepasswd -new mysecretpassword -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit</span><br></pre></td></tr></table></figure>
+<p>上面这句话的目的是将<code>changeit</code>这个密码存储到秘钥库中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 'yes' | $JAVA_HOME/bin/keytool -import -alias passport.sso.com -keystore $&#123;JAVA_HOME&#125;/jre/lib/security/cacerts -file /tomcat.cer -trustcacerts  -storepass mysecretpassword</span><br></pre></td></tr></table></figure>
+<p>此处是导入证书，<code>-storepass mysecretpassword</code>,这句话是指定我们上一步存储的密码名称。这一行如果单独执行的话是需要输入<code>yes</code>来信任该证书的，我们可以通过<code>echo &#39;yes&#39;</code>这种写法来实现<code>yes</code>的自动输入。</p>
+<p>参考：</p>
+<p><a href="https://rootsquash.com/2016/05/02/inserting-certificates-into-java-keystore-via-dockerfile/" target="_blank" rel="noopener">Inserting certificates into Java keystore via Dockerfile</a></p>
+<p><a href="https://blog.csdn.net/tony1130/article/details/5134318" target="_blank" rel="noopener">java中Keytool的使用总结</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-04-10T09:09:33.375Z" itemprop="dateUpdated">2018-04-10 17:09:33</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://xiaomogu.me">
+            <img src="/img/avatar.jpg" alt="树荫小蘑菇">
+            树荫小蘑菇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dockerfile/">Dockerfile</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&title=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&title=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&via=http://xiaomogu.me" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/03/19/Mybatis 初始化过程/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Mybatis 初始化过程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢您的支持🙏~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>树荫小蘑菇 &copy; 2017 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">冀ICP备18001208号</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&title=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&title=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dockerfile 导入证书到JAVA的秘钥库中》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/&via=http://xiaomogu.me" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/10/Dockerfile 导入证书到JAVA的秘钥库中/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3awU7rQAwFUP7/p4vECgmaXtvjNouTFXrkJXOyGJvr+fqKr8fP9fvnv/+S3Hn95OvnXz9ndOHh4eG1lv7sugZcv/7Zgq7fkq/h+n48PDy8bV5SDPK9N1luUh6q68HDw8O7G2+yxKQh7jXueHh4eHfm5S9OWvDqu/Dw8PDuxkuCgGpMkBeVJOZYz1rw8PDwYl5vAPbZn9fne3h4eHitqfp7RmJ5811eJx4eHt4Cr3ekqXfo6tQhqjyYwMPDw9vgVYPRXqwwPy7QHMXh4eHhrfF67W8Stub3zAdsL5ppPDw8vKMTqOqgK/9trxWuFpIXhQoPDw/vKC9fevmbxeP/alxbKF14eHh4C7wDf/AXS8LkmFT1LXh4eHgbvBxWDRHy+dvGk/Hw8PDeyes1tXnMmsSyxw514eHh4a3xopNZgzY3P14wiSr+eQ4eHh7eAi9Zbh7CVu/PP9m8QcfDw8M7xasOlnqt7WSLz4tK+S8GPDw8vAGvOuyvLisZoVWHalFsgYeHh7fMOzXIr0bD1SNfSel6mrXg4eHhLfDy4VZvE++Fv7378fDw8LZ5vSa7uWVXm+O4BcfDw8N7D68XrVZb5GpU0WO/GIDh4eHhjXnViKHXak8y1SSkKAQZeHh4eEd51dBhMkLL/2/vo+Ph4eF9ijfZoHtHAfIWPPlMeHh4eHu8autcPVA1iTCq0W2hJODh4eGNeflWuxH1TkLeawseHh7eWd6jeE2oeYt8LCLBw8PDW+BVN9w8ii1Xp+K78lYbDw8Pb4OXFIPqUaezjXW1MES1Cw8PD2/M643EJvFE0mr3ShceHh7ePXnJcqvHCF5s8cVihoeHh3cHXn4YqxfOJrt6/kHx8PDwtnnVyKDXTJ96Wh4K4+Hh4W3wegOwvQAib9B77TgeHh7egPcNR5lBBWI84GcAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '(つェ⊂)咦!人呢？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
