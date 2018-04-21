@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-116739796-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>JDK源码阅读-Iterable与Iterator | 蘑菇屋 | 一个蘑菇</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JDK源码,Java基础,设计模式">
+    <meta name="description" content="JDK源码阅读-Iterable与Iterator JDK版本：jdk1.8.0_121,本文中所有代码的编译和运行环境均依赖该版本的jdk和对应版本的jre  1.什么是Iterable1.1简介Iterable是Java集合中的一个顶级接口，是Collection的父类，用于进行集合中元素的迭代。Iterable的方法定义如下： 12345678910111213141516171819pac">
+<meta name="keywords" content="JDK源码,Java基础,设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK源码阅读-Iterable与Iterator">
+<meta property="og:url" content="http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/index.html">
+<meta property="og:site_name" content="蘑菇屋">
+<meta property="og:description" content="JDK源码阅读-Iterable与Iterator JDK版本：jdk1.8.0_121,本文中所有代码的编译和运行环境均依赖该版本的jdk和对应版本的jre  1.什么是Iterable1.1简介Iterable是Java集合中的一个顶级接口，是Collection的父类，用于进行集合中元素的迭代。Iterable的方法定义如下： 12345678910111213141516171819pac">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://orw70g1os.bkt.clouddn.com/1524325872.png">
+<meta property="og:updated_time" content="2018-04-21T16:17:59.091Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JDK源码阅读-Iterable与Iterator">
+<meta name="twitter:description" content="JDK源码阅读-Iterable与Iterator JDK版本：jdk1.8.0_121,本文中所有代码的编译和运行环境均依赖该版本的jdk和对应版本的jre  1.什么是Iterable1.1简介Iterable是Java集合中的一个顶级接口，是Collection的父类，用于进行集合中元素的迭代。Iterable的方法定义如下： 12345678910111213141516171819pac">
+<meta name="twitter:image" content="http://orw70g1os.bkt.clouddn.com/1524325872.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="蘑菇屋" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">树荫小蘑菇</h5>
+          <a href="mailto:sunylan94@gmail.com" title="sunylan94@gmail.com" class="mail">sunylan94@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                存档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/sunaowei" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JDK源码阅读-Iterable与Iterator</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JDK源码阅读-Iterable与Iterator</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-21T16:18:01.000Z" itemprop="datePublished" class="page-time">
+  2018-04-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java基础/">Java基础</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JDK源码阅读-Iterable与Iterator"><span class="post-toc-number">1.</span> <span class="post-toc-text">JDK源码阅读-Iterable与Iterator</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-什么是Iterable"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.什么是Iterable</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1简介"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">1.1简介</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-iterator"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">1.2 iterator()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-3-forEach"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">1.3 forEach()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-4-spliterator"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">1.4 spliterator()</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-什么是Iterator"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2.什么是Iterator</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1-简介"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">2.1 简介</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2-hasNext"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">2.2 hasNext()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3-next"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">2.3 next()</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-4-remove-star-star"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">2.4 remove():star::star:</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-5-forEachRemaining"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">2.5 forEachRemaining()</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-Iterator的实现"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">3.Iterator的实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-ArrayList中Iterator的实现"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">3.1 ArrayList中Iterator的实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-1-1-Itr"><span class="post-toc-number">1.3.1.1.</span> <span class="post-toc-text">3.1.1 Itr</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-1-1-ListItr"><span class="post-toc-number">1.3.1.2.</span> <span class="post-toc-text">3.1.1 ListItr</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-迭代器模式"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">4.迭代器模式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-1-类图"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">4.1 类图</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-2-迭代器模式的结构"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">4.2 迭代器模式的结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#迭代器实现-ConcreteIterator-实现迭代器接口中定义的方法，完成集合的迭代。"><span class="post-toc-number">1.4.2.0.1.</span> <span class="post-toc-text">迭代器实现(ConcreteIterator):实现迭代器接口中定义的方法，完成集合的迭代。</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-JDK源码阅读-Iterable与Iterator"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JDK源码阅读-Iterable与Iterator</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-22 00:18:01" datetime="2018-04-21T16:18:01.000Z"  itemprop="datePublished">2018-04-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Java基础/">Java基础</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="JDK源码阅读-Iterable与Iterator"><a href="#JDK源码阅读-Iterable与Iterator" class="headerlink" title="JDK源码阅读-Iterable与Iterator"></a>JDK源码阅读-Iterable与Iterator</h2><blockquote>
+<p>JDK版本：jdk1.8.0_121,本文中所有代码的编译和运行环境均依赖该版本的jdk和对应版本的jre</p>
+</blockquote>
+<h3 id="1-什么是Iterable"><a href="#1-什么是Iterable" class="headerlink" title="1.什么是Iterable"></a>1.什么是Iterable</h3><h4 id="1-1简介"><a href="#1-1简介" class="headerlink" title="1.1简介"></a>1.1简介</h4><p>Iterable是Java集合中的一个顶级接口，是<em>Collection</em>的父类，用于进行集合中元素的迭代。<em>Iterable</em>的方法定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> java.lang;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> ...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Iterable</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">Iterator&lt;T&gt; <span class="title">iterator</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">forEach</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> T&gt; action)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(action);</span><br><span class="line">        <span class="keyword">for</span> (T t : <span class="keyword">this</span>) &#123;</span><br><span class="line">            action.accept(t);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> Spliterator&lt;T&gt; <span class="title">spliterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Spliterators.spliteratorUnknownSize(iterator(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里面包含三个方法，其中<em>forEach</em>和<em>spliterator</em>这两个Java 1.8新增的<strong>default</strong>方法，关于什么是<strong>default</strong>方法，参考<a href="http://www.importnew.com/7302.html" target="_blank" rel="noopener">这里</a>,(PS:Java为了向下兼容也是煞费苦心啊:dog:)</p>
+<h4 id="1-2-iterator"><a href="#1-2-iterator" class="headerlink" title="1.2 iterator()"></a>1.2 iterator()</h4><p><em>iterator()</em>方法是Java1.5新增的特性，用于生成<em>Iterator</em>迭代器，这里该方法只负责生成<em>Iterator</em>迭代器，并不包含任何迭代器的状态，例如“当前元素”等。</p>
+<p>而<em>Iterator</em>迭代器是作为一个独立的接口存在的。</p>
+<p>该遍历是<strong>顺序遍历</strong></p>
+<h4 id="1-3-forEach"><a href="#1-3-forEach" class="headerlink" title="1.3 forEach()"></a>1.3 forEach()</h4><p>forEach 很熟悉 用来支持lambda表达式的，例如:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.forEach(item-&gt;&#123;</span><br><span class="line">    doSomething...;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>我们可以看到 在<em>Iterable</em>接口中默认给出的实现是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (T t : <span class="keyword">this</span>) &#123;</span><br><span class="line">    action.accept(t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是这个方法在子类中是可以被覆盖的，很多集合都对该方法进行了重写操作，以适应不同集合的特性。</p>
+<h4 id="1-4-spliterator"><a href="#1-4-spliterator" class="headerlink" title="1.4 spliterator()"></a>1.4 spliterator()</h4><p>该接口是Java为了<strong>并行</strong>遍历数据源中的元素而设计的迭代器</p>
+<p>该方法类似于<em>iterator()</em>这个方法，区别在于<em>iterator()</em>是顺序遍历，而<em>spliterator()</em>是并行遍历，具体可以参考这里<a href="https://segmentfault.com/q/1010000007087438" target="_blank" rel="noopener">Java8里面的java.util.Spliterator接口有什么用？</a></p>
+<hr>
+<h3 id="2-什么是Iterator"><a href="#2-什么是Iterator" class="headerlink" title="2.什么是Iterator"></a>2.什么是Iterator</h3><h4 id="2-1-简介"><a href="#2-1-简介" class="headerlink" title="2.1 简介"></a>2.1 简介</h4><p><em>Iterator</em>是<strong>具有迭代状态</strong>的对象，即从该类的方法中我们可以获取当前迭代的元素，下一个元素等操作。它可以把访问逻辑从不同类型的集合类中抽象出来，从而避免向客户端暴露集合的内部结构。<em>Iterator</em>的定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> java.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.function.Consumer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">E <span class="title">next</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException(<span class="string">"remove"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; action)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(action);</span><br><span class="line">        <span class="keyword">while</span> (hasNext())</span><br><span class="line">            action.accept(next());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-hasNext"><a href="#2-2-hasNext" class="headerlink" title="2.2 hasNext()"></a>2.2 hasNext()</h4><p>接口解释：用于判断迭代器(<em>iteration</em>)中是否还有更多的元素(elements<em>)。如果迭代器中还有更多的元素则返回</em>true。</p>
+<h4 id="2-3-next"><a href="#2-3-next" class="headerlink" title="2.3 next()"></a>2.3 next()</h4><p>接口解释：用于获取迭代器中的下一个元素(<em>next element</em>)，这里如果下一个元素不存在会抛出一个<em>NoSuchElementException</em>的异常，所以这个方法通常结合<em>hasNext()</em>一起使用。</p>
+<h4 id="2-4-remove-star-star"><a href="#2-4-remove-star-star" class="headerlink" title="2.4 remove():star::star:"></a>2.4 remove():star::star:</h4><p>接口解释：用于从集合中移除迭代器返回的最后一个元素。<strong>这个方法只能在<em>next()</em>方法之后进行调用<em>一次</em></strong></p>
+<p>这个方法会抛出两个异常</p>
+<ul>
+<li><em>UnsupportedOperationException:</em>表示当前迭代器不支持移除操作。</li>
+<li><em>IllegalStateException</em>:表示<em>next()</em>方法尚未执行 或 <em>next()</em>方法后已经执行了<em>remove()</em>方法。</li>
+</ul>
+<p>这里有两个例子，如何在集合中移除一个元素的操作。</p>
+<p><strong>错误示范</strong>:x::</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Lists.newArrayList(<span class="string">"A"</span>,<span class="string">"B"</span>,<span class="string">"C"</span>,<span class="string">"D"</span>);</span><br><span class="line"><span class="keyword">for</span> (String s : list) &#123;</span><br><span class="line">    <span class="keyword">if</span> (Objects.equals(<span class="string">"A"</span>,s))&#123;</span><br><span class="line">        list.remove(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里会抛出一个异常<code>java.util.ConcurrentModificationException</code>，表示 方法检测到对象的并发修改，但是这种修改并不被允许。</p>
+<p>产生的原因就是迭代器是依赖于集合而存在，在判断成功后，集合的中移除了该元素，而迭代器却不知道，所以就报错了，这个错叫并发修改异常。</p>
+<p><strong>正确操作✅:</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Lists.newArrayList(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>);</span><br><span class="line">Iterator&lt;String&gt; it = list.iterator();</span><br><span class="line"><span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">    String str = it.next();</span><br><span class="line">    <span class="keyword">if</span> (Objects.equals(<span class="string">"A"</span>, str)) &#123;</span><br><span class="line">        it.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在Java8中上面的代码可以用下面两行来完成：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Lists.newArrayList(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>);</span><br><span class="line">list.removeIf(str -&gt; Objects.equals(<span class="string">"A"</span>, str));</span><br></pre></td></tr></table></figure>
+<p>这两种方式都是可以正确的完成我们所需要的操作的。</p>
+<h4 id="2-5-forEachRemaining"><a href="#2-5-forEachRemaining" class="headerlink" title="2.5 forEachRemaining()"></a>2.5 forEachRemaining()</h4><p>这个方法是1.8新增的方法，对每个剩余的元素执行给定的操作，直到所有元素都执行完成或者抛出异常。</p>
+<p>如果传入的操作(<em>Consumer&lt;? super E&gt; action</em>)为空的话，该方法会抛出一个<em>NullPointerException</em></p>
+<h3 id="3-Iterator的实现"><a href="#3-Iterator的实现" class="headerlink" title="3.Iterator的实现"></a>3.Iterator的实现</h3><p>我们可以看到<em>Iterator</em>提供了最简单的向后遍历的操作接口，如果我们需要执行向前遍历呢？或者执行某些特殊的遍历方式，那么这个时候就要看不同集合对<em>Iterator</em>的实现了，不同集合的对于<em>Iterator</em>的实现基本都是通过内部类来做的实现。</p>
+<h4 id="3-1-ArrayList中Iterator的实现"><a href="#3-1-ArrayList中Iterator的实现" class="headerlink" title="3.1 ArrayList中Iterator的实现"></a>3.1 ArrayList中Iterator的实现</h4><h5 id="3-1-1-Itr"><a href="#3-1-1-Itr" class="headerlink" title="3.1.1 Itr"></a>3.1.1 Itr</h5><p>在<strong>ArrayList</strong>中，<em>iterator()</em>方法被返回了一个<strong>Itr</strong>的对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ArrArrayList.java</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Itr();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个Itr对象就是对<strong>ArrayList</strong>对<strong>Iterator</strong>的实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">// 被返回的节点的索引</span></span><br><span class="line">    <span class="keyword">int</span> cursor;       <span class="comment">// index of next element to return、</span></span><br><span class="line">    <span class="comment">// 最后一个被返回的节点的索引</span></span><br><span class="line">    <span class="keyword">int</span> lastRet = -<span class="number">1</span>; <span class="comment">// index of last element returned; -1 if no such</span></span><br><span class="line">    <span class="comment">// expectedModCount 期望的被修改的次数，</span></span><br><span class="line">    <span class="comment">// modCount 被修改的次数,这个下面会用得到。定义modCount的注释翻译可以参考[这里](https://blog.csdn.net/qq_27093465/article/details/53116250)</span></span><br><span class="line">    <span class="keyword">int</span> expectedModCount = modCount;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 判断是否还有下一个元素,如果当前游标所在位置不等于集合的大小的时候都会返回true.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cursor != size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * next操作</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	   <span class="comment">// 校验是否被非法修改</span></span><br><span class="line">        checkForComodification();</span><br><span class="line">        <span class="keyword">int</span> i = cursor;</span><br><span class="line">        <span class="comment">// 当前游标大于等于集合的大小的时候 抛出异常</span></span><br><span class="line">        <span class="keyword">if</span> (i &gt;= size)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</span><br><span class="line">        <span class="comment">// 存储ArrayList的数组缓冲区的大小</span></span><br><span class="line">        Object[] elementData = ArrayList.<span class="keyword">this</span>.elementData;</span><br><span class="line">        <span class="comment">// 如果游标大于等于数组缓冲区的大小则抛出异常</span></span><br><span class="line">        <span class="keyword">if</span> (i &gt;= elementData.length)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">        <span class="comment">// 游标+1</span></span><br><span class="line">        cursor = i + <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 获取对应下表的内容，进行强转， 并将当前访问的节点记录到lastRet中，</span></span><br><span class="line">        <span class="keyword">return</span> (E) elementData[lastRet = i];</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 移除操作</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// lastRet小于0，即表示没有执行next操作，也就是不存在当前元素。</span></span><br><span class="line">        <span class="keyword">if</span> (lastRet &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</span><br><span class="line">	   <span class="comment">// 校验是否被非法修改</span></span><br><span class="line">        checkForComodification();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 将最后一次访问的节点移除</span></span><br><span class="line">            ArrayList.<span class="keyword">this</span>.remove(lastRet);</span><br><span class="line">            <span class="comment">// 更新 游标，😈我们直接执行list中的remove方法就是因为没有更新游标和expectedModCount，所以无法通过校验。</span></span><br><span class="line">            cursor = lastRet;</span><br><span class="line">            <span class="comment">// 更改最后一次访问的索引为-1，此处因为最后一次访问的元素已经不存在了，所以更新为-1，同时也可以避免再次调用remove方法。</span></span><br><span class="line">            lastRet = -<span class="number">1</span>;</span><br><span class="line">            <span class="comment">// 更新修改次数</span></span><br><span class="line">            expectedModCount = modCount;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException ex) &#123;</span><br><span class="line">            <span class="comment">// 捕获remove过程中出现的数组下标越界异常，更改为非法修改异常。</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; consumer)</span> </span>&#123;</span><br><span class="line">        Objects.requireNonNull(consumer);</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> size = ArrayList.<span class="keyword">this</span>.size;</span><br><span class="line">        <span class="keyword">int</span> i = cursor;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= size) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">final</span> Object[] elementData = ArrayList.<span class="keyword">this</span>.elementData;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= elementData.length) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (i != size &amp;&amp; modCount == expectedModCount) &#123;</span><br><span class="line">            consumer.accept((E) elementData[i++]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// update once at end of iteration to reduce heap write traffic</span></span><br><span class="line">        cursor = i;</span><br><span class="line">        lastRet = i - <span class="number">1</span>;</span><br><span class="line">        checkForComodification();</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">// final 防止这个方法被非法修改</span></span><br><span class="line">    <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 校验修改次数和期望的修改次数是否相同，remove是一个典型的例子。Itr中的remove方法更新了expectedModCount，而list中remove方法并没有，所以我们可以使用Iterator进行遍历删除。</span></span><br><span class="line">        <span class="keyword">if</span> (modCount != expectedModCount)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-1-1-ListItr"><a href="#3-1-1-ListItr" class="headerlink" title="3.1.1 ListItr"></a>3.1.1 ListItr</h5><p>在ArrayList中，还有一个<em>listIterator()</em>方法被返回了一个<strong>ListIterator</strong>的对象。那么这个对象是干啥的呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 从指定位置开始返回一个迭代器，如果位置超过了List的大小，则抛出IndexOutOfBoundsException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index &lt; <span class="number">0</span> || index &gt; size)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException(<span class="string">"Index: "</span>+index);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ListItr(index);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 返回一个从0开始的迭代器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ListIterator&lt;E&gt; <span class="title">listIterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ListItr(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法在<strong>Itr</strong>基础上提供了一些List集合特有的遍历方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 继承了Itr，实现了ListIterator接口，ListIterator接口中定义了List集合一些特有的遍历方法</span></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">ListItr</span> <span class="keyword">extends</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">ListIterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">// 构造方法，可以指定迭代器的起始位置，即cursor的位置</span></span><br><span class="line">    ListItr(<span class="keyword">int</span> index) &#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        cursor = index;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 是否有前一个元素</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPrevious</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 判断游标是否是在最前面</span></span><br><span class="line">        <span class="keyword">return</span> cursor != <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 后一个元素的位置</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">nextIndex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cursor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 前一个元素的位置</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">previousIndex</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cursor - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 前一个元素</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">previous</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 校验是否被非法修改(Itr中的方法)</span></span><br><span class="line">        checkForComodification();</span><br><span class="line">        <span class="comment">// 确定前一个元素的位置</span></span><br><span class="line">        <span class="keyword">int</span> i = cursor - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 前一个元素如果小于0则表示当前是起始节点，上一个节点不存在。</span></span><br><span class="line">        <span class="keyword">if</span> (i &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</span><br><span class="line">      	<span class="comment">// 剩下的和next()同理</span></span><br><span class="line">        Object[] elementData = ArrayList.<span class="keyword">this</span>.elementData;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= elementData.length)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">        cursor = i;</span><br><span class="line">        <span class="keyword">return</span> (E) elementData[lastRet = i];</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 替换当前元素</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 判断当前元素是否存在，同理的类似于remove()</span></span><br><span class="line">        <span class="keyword">if</span> (lastRet &lt; <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</span><br><span class="line">        <span class="comment">// 校验是否被非法修改</span></span><br><span class="line">        checkForComodification();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 修改缓冲区数组的值</span></span><br><span class="line">            ArrayList.<span class="keyword">this</span>.set(lastRet, e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 增加一个值(原理同remove())</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        checkForComodification();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> i = cursor;</span><br><span class="line">            ArrayList.<span class="keyword">this</span>.add(i, e);</span><br><span class="line">            cursor = i + <span class="number">1</span>;</span><br><span class="line">            lastRet = -<span class="number">1</span>;</span><br><span class="line">            expectedModCount = modCount;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-迭代器模式"><a href="#4-迭代器模式" class="headerlink" title="4.迭代器模式"></a>4.迭代器模式</h3><p><strong>实现了Iterable接口的类是可迭代的；实现了Iterator接口的类是一个迭代器。</strong></p>
+<p>这里算是一个<strong>迭代器模式</strong>，即提供一种方法访问一个容器对象中各个元素，而又不暴露该对象的内部细节。</p>
+<h4 id="4-1-类图"><a href="#4-1-类图" class="headerlink" title="4.1 类图"></a>4.1 类图</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://orw70g1os.bkt.clouddn.com/1524325872.png" alt="迭代器类图" title="">
+                </div>
+                <div class="image-caption">迭代器类图</div>
+            </figure>
+<h4 id="4-2-迭代器模式的结构"><a href="#4-2-迭代器模式的结构" class="headerlink" title="4.2 迭代器模式的结构"></a>4.2 迭代器模式的结构</h4><ul>
+<li><p>抽象容器(Aggregate):通常是一个接口，提供iterator()方法，比如说Java中的Iterator接口，Collection接口，Set接口等。</p>
+</li>
+<li><p>具体容器(ConcreteAggregate):抽象容器的具体实现类，比如说<strong>ArrayList</strong>，<strong>LinkList</strong>，<strong>HashSet</strong>等。</p>
+</li>
+<li><p>抽象迭代器(Iterator):定义遍历元素所需要的方法，比如说：<em>next()</em>，<em>hasNext()</em>，<em>remove()</em>等方法。</p>
+</li>
+<li><h6 id="迭代器实现-ConcreteIterator-实现迭代器接口中定义的方法，完成集合的迭代。"><a href="#迭代器实现-ConcreteIterator-实现迭代器接口中定义的方法，完成集合的迭代。" class="headerlink" title="迭代器实现(ConcreteIterator):实现迭代器接口中定义的方法，完成集合的迭代。"></a>迭代器实现(ConcreteIterator):实现迭代器接口中定义的方法，完成集合的迭代。</h6></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-04-21T16:17:59.091Z" itemprop="dateUpdated">2018-04-22 00:17:59</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://xiaomogu.me">
+            <img src="/img/avatar.jpg" alt="树荫小蘑菇">
+            树荫小蘑菇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK源码/">JDK源码</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java基础/">Java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/&title=《JDK源码阅读-Iterable与Iterator》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/&title=《JDK源码阅读-Iterable与Iterator》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JDK源码阅读-Iterable与Iterator》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/&via=http://xiaomogu.me" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Dockerfile中`ADD`和`COPY`的区别</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢您的支持🙏~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>树荫小蘑菇 &copy; 2017 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">冀ICP备18001208号</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/&title=《JDK源码阅读-Iterable与Iterator》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/&title=《JDK源码阅读-Iterable与Iterator》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JDK源码阅读-Iterable与Iterator》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/&via=http://xiaomogu.me" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/22/JDK源码阅读-Iterable与Iterator/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtElEQVR42u3aS5KDMAwFQO5/6ZltqpLAk2QTFs0qlY9xe4EUSccRX38v1+s77985/+23dd7ff1/z2/oLLjw8PLzB1vNNnG8rOaDqpvP94OHh4d3DS5Y732jv0yRIJGHp6/t4eHh4D+AlW6nmt6vugoeHh/dk3vkju8rupfh4eHh4v+VNlmveOAgVt9Za8PDw8PoV1yMPEr96vaW/h4eHhzdOXvOiaq+Ym+xntFs8PDy8Dbz8gTsvuU4e96MBBTw8PLylvOqIVXLL5AiSUJHc8WI1PDw8vBt552XTnJeUNnrJdBQw8PDw8G7kJaMA1eJvXiCejyzg4eHh7ebNBwKqn+ZHVi0El6vFeHh4eC1eoZkULJ0XNeYJ9EVgw8PDw9vA65UVqqMD1Q0lwSBfGQ8PD28Hr5qRVhtgq6i90QQ8PDy8tbxempsMCkTJ7qAcHA0o4OHh4W3jVTeU4/Nqam+w4GIFPDw8vA285A9/XphIAL3X+XBDIcLg4eHhDXjVkkFeTp2UgKuh4uvKeHh4eEt5hYjRGhqYh5B8hx++j4eHh7eNV719tVhQHTPt9fHw8PDw7uH1AkCveDEZIKiOguHh4eHt41ULr9VGfr7F+djBRTECDw8PbwMv31AeAOapcJ6Cf7gXHh4e3gbepGVVHSzoFYJ7QQsPDw/vTl61tb/qV0mBuHl3PDw8vFt41cDQGyaIEuL5MeHh4eFt41WHq5I0t9qLy5PvwiHi4eHhLeXNB63yxHfSHssT6MLoAB4eHl6Ll1/VNtWEOg8beHh4eLt5vVZTcmZ5mWPCvtghHh4e3jZe/ie/+oDuHc2yCw8PD++RvGoASFbL228XRQo8PDy8B/AmJddqipwf5bKUGg8PDy/mJT/OF80bVHnLrVdixsPDw9vBq/6jnzexqgd67L7w8PDw0usfe/WccZcGXUAAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '(つェ⊂)咦!人呢？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
