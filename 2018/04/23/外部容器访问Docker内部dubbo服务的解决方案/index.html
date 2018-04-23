@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-116739796-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="true">
+    
+    
+    
+    <title>外部容器访问Docker内部dubbo服务的解决方案 | 蘑菇屋 | 一个蘑菇</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Docker,Dubbo">
+    <meta name="description" content="外部容器访问Docker内部dubbo服务的解决方案问题：服务提供者和消费者混合部署在docker容器中和容器外的场景，容器外的服务无法访问容器内的服务。 原因：Dubbo的服务发现机制，是每个服务提供者向Dubbo注册中心注册过，注册中心会将服务提供者的地址提供给同样在注册中心注册的服务调用方，也就是消费者。之后即使Dubbo注册中心挂了也不影响服务的调用。出现这个问题是因为容器内部的服务提供者">
+<meta name="keywords" content="Docker,Dubbo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="外部容器访问Docker内部dubbo服务的解决方案">
+<meta property="og:url" content="http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/index.html">
+<meta property="og:site_name" content="蘑菇屋">
+<meta property="og:description" content="外部容器访问Docker内部dubbo服务的解决方案问题：服务提供者和消费者混合部署在docker容器中和容器外的场景，容器外的服务无法访问容器内的服务。 原因：Dubbo的服务发现机制，是每个服务提供者向Dubbo注册中心注册过，注册中心会将服务提供者的地址提供给同样在注册中心注册的服务调用方，也就是消费者。之后即使Dubbo注册中心挂了也不影响服务的调用。出现这个问题是因为容器内部的服务提供者">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://orw70g1os.bkt.clouddn.com/1524464714.png">
+<meta property="og:updated_time" content="2018-04-23T06:32:42.873Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="外部容器访问Docker内部dubbo服务的解决方案">
+<meta name="twitter:description" content="外部容器访问Docker内部dubbo服务的解决方案问题：服务提供者和消费者混合部署在docker容器中和容器外的场景，容器外的服务无法访问容器内的服务。 原因：Dubbo的服务发现机制，是每个服务提供者向Dubbo注册中心注册过，注册中心会将服务提供者的地址提供给同样在注册中心注册的服务调用方，也就是消费者。之后即使Dubbo注册中心挂了也不影响服务的调用。出现这个问题是因为容器内部的服务提供者">
+<meta name="twitter:image" content="http://orw70g1os.bkt.clouddn.com/1524464714.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="蘑菇屋" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">树荫小蘑菇</h5>
+          <a href="mailto:sunylan94@gmail.com" title="sunylan94@gmail.com" class="mail">sunylan94@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                存档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/sunaowei" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">外部容器访问Docker内部dubbo服务的解决方案</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">外部容器访问Docker内部dubbo服务的解决方案</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-04-23T06:31:18.000Z" itemprop="datePublished" class="page-time">
+  2018-04-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Docker/">Docker</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#外部容器访问Docker内部dubbo服务的解决方案"><span class="post-toc-number">1.</span> <span class="post-toc-text">外部容器访问Docker内部dubbo服务的解决方案</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#问题："><span class="post-toc-number">1.1.</span> <span class="post-toc-text">问题：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原因："><span class="post-toc-number">1.2.</span> <span class="post-toc-text">原因：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解决方案："><span class="post-toc-number">1.3.</span> <span class="post-toc-text">解决方案：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解释："><span class="post-toc-number">1.4.</span> <span class="post-toc-text">解释：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参考："><span class="post-toc-number">1.5.</span> <span class="post-toc-text">参考：</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-外部容器访问Docker内部dubbo服务的解决方案"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">外部容器访问Docker内部dubbo服务的解决方案</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-04-23 14:31:18" datetime="2018-04-23T06:31:18.000Z"  itemprop="datePublished">2018-04-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Docker/">Docker</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="外部容器访问Docker内部dubbo服务的解决方案"><a href="#外部容器访问Docker内部dubbo服务的解决方案" class="headerlink" title="外部容器访问Docker内部dubbo服务的解决方案"></a>外部容器访问Docker内部dubbo服务的解决方案</h2><h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><p>服务提供者和消费者混合部署在docker容器中和容器外的场景，容器外的服务无法访问容器内的服务。</p>
+<h3 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h3><p>Dubbo的服务发现机制，是每个服务提供者向Dubbo注册中心注册过，注册中心会将服务提供者的地址提供给同样在注册中心注册的服务调用方，也就是消费者。之后即使Dubbo注册中心挂了也不影响服务的调用。出现这个问题是因为容器内部的服务提供者向注册中心提供的地址是172.xx.xx.xx，也就是Docker内部的IP地址，但是这个IP地址在Docker外部是无法访问的，所以出现了上述的问题。</p>
+<h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h3><p>网上很多解决方案都有一定的局限性，像是改hostname等，都会给后续的使用带来不可预知的问题，庆幸的是在Dubbo的Issues中发现了类似的问题，<a href="https://github.com/apache/incubator-dubbo/issues/668" target="_blank" rel="noopener">参见这里</a>，Dubbo官方给出了对应的解决方案。具体如下：</p>
+<p>由于我们使用docker-compose进行编排，所以我们要修改的也是对应的docker-compose.yml文件。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">projectName:</span></span><br><span class="line"><span class="attr">  image:</span> <span class="attr">project:v1.0</span></span><br><span class="line"><span class="attr">  restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"8422:8080"</span></span><br><span class="line">    <span class="comment"># 前面为注册到注册中心的端口，后面为docker监听的端口</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"28081:28080"</span></span><br><span class="line"><span class="attr">  environment:</span></span><br><span class="line">    <span class="comment"># 注册到注册中心的IP，这里我们选择宿主机的IP</span></span><br><span class="line"><span class="attr">    DUBBO_IP_TO_REGISTRY:</span> <span class="number">192.168</span><span class="number">.1</span><span class="number">.10</span></span><br><span class="line">    <span class="comment"># 注册到注册中心的端口</span></span><br><span class="line"><span class="attr">    DUBBO_PORT_TO_REGISTRY:</span> <span class="number">28081</span></span><br></pre></td></tr></table></figure>
+<h3 id="解释："><a href="#解释：" class="headerlink" title="解释："></a>解释：</h3><p>我们在dubbo-admin控制台中可以看到对应服务的提供者的IP已经是宿主机的IP了：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://orw70g1os.bkt.clouddn.com/1524464714.png" alt="docker provider" title="">
+                </div>
+                <div class="image-caption">docker provider</div>
+            </figure>
+<p>这样注册中心提供给服务调用者的IP就会是宿主机的IP，端口是我们注册的宿主机器的端口，当服务调用者进行服务调用的时候，宿主机的端口映射到了对应容器的dubbo监听端口，也就能够实现端口转发，达到正常的调用操作。</p>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://github.com/dubbo/dubbo-docker-sample" target="_blank" rel="noopener">dubbo-docker-sample</a></p>
+<p><a href="http://coderxiao.com/2015/06/10/Dubbo-distributed-service2/" target="_blank" rel="noopener">基于Dubbo的跨主机容器通信遇到的问题</a></p>
+<p><a href="https://github.com/apache/incubator-dubbo/issues/668" target="_blank" rel="noopener">dubbo服务部署在容器中，注册发现的问题 </a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-04-23T06:32:42.873Z" itemprop="dateUpdated">2018-04-23 14:32:42</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://xiaomogu.me">
+            <img src="/img/avatar.jpg" alt="树荫小蘑菇">
+            树荫小蘑菇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dubbo/">Dubbo</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/&title=《外部容器访问Docker内部dubbo服务的解决方案》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/&title=《外部容器访问Docker内部dubbo服务的解决方案》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《外部容器访问Docker内部dubbo服务的解决方案》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/&via=http://xiaomogu.me" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/04/22/JDK源码阅读-Iterable与Iterator/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">JDK源码阅读-Iterable与Iterator</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢您的支持🙏~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>树荫小蘑菇 &copy; 2017 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">冀ICP备18001208号</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/&title=《外部容器访问Docker内部dubbo服务的解决方案》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/&title=《外部容器访问Docker内部dubbo服务的解决方案》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《外部容器访问Docker内部dubbo服务的解决方案》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/&via=http://xiaomogu.me" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/23/外部容器访问Docker内部dubbo服务的解决方案/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADKElEQVR42u3a0W7jMAwEwP7/T/eAe73aXZLKIWbGT0ViWxoFKCGuvr7i6/vvdfV5/u3VJ8lYV29O7m9e2NjY2A9hf99e/07laqLJG6r33C9ubxRsbGzsrez7onVfZpLFSgpYdTmSeV5+jo2Njf2R7GSApLDdT7e6gcHGxsbGnhew3rPVEvV2dRsbGxv7zdh5uyffWsxJvSU+3EvDxsbGfnt2Neh9579fmG9jY2NjvyX7u3W97m15aykvWj88hY2Njb2InRygnNSFyT29UloobNjY2NiL2L14tVdUcmTe9O+Ni42Njb2Jnf/r77V78sA4L6W9oAIbGxt7H7sa8c6X5v49vUJVjX6xsbGxt7JfFw/3YobqGwobEmxsbOzV7F6pSCbRixYSanVRsLGxsXez86i1d5QnH+Vs5yzaimBjY2M/kJ1Mq9pU6hXCSbRQ3ZxgY2Nj72PnEeypQza98pZEC+X4ARsbG/vh7Em4Wy14OakXLRd+DGxsbOyl7ElxOtXQ720n8sUtd6SwsbGxH8ie3JPDJphqybzcdWFjY2OvYPdaQtVjOr2Cd7apFMUD2NjY2A9nJwHtpK2Th77J/dWZYGNjY29lV4/g5MWst2mpvjkvZtjY2Ni72ckDo2C1NdHqcufPYmNjY29iVx/IS868PZSXpeqd2NjY2JvYpw7EVEPZfDnmB4MuSxc2Njb2InY+6epyTA7c9CKKKJzGxsbGXseuxquTmLYaM+TLUQgnsLGxsdex5xuSPGStNolOhb7Y2NjYW9nVwzrJokxi4F7YXF1obGxs7H3savhabegngGT5TuGxsbGxP4d96nhNvnV5RZn85XNsbGzsReyzsW5vC9H7GQrBwKvTbGxsbOz/zj7WmmkVld7hnsmBnh9SEWxsbOyHsyd1Lwloq42n3kQnbSlsbGzsHexq0coP0FQP9FSP4CRjRV00bGxs7BXsU4UhL2y9Atm7sLGxsbHzplKVVG0/nYqisbGxsT+TnWwq8m+rTaLJ4o4KGDY2NvZD2DkjbyTlkUC1bZS0on6ZOTY2NvYidrUpk2wV8nuSoDcvhNVRsLGxsR/O/gONZm3xauhMbQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '(つェ⊂)咦!人呢？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
