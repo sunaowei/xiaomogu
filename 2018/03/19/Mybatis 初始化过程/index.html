@@ -171,13 +171,6 @@ ga('send', 'pageview');
 
 <div class="container body-wrap">
     
-    <aside class="post-widget">
-        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
-            <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Mybatis-初始化过程"><span class="post-toc-number">1.</span> <span class="post-toc-text">Mybatis 初始化过程</span></a></li></ol>
-        </nav>
-    </aside>
-
 
 <article id="post-Mybatis 初始化过程"
   class="post-article article-type-post fade" itemprop="blogPost">
@@ -379,6 +372,30 @@ ga('send', 'pageview');
 
 
 
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "wofO7u1OXrkojrq24c9fmSDD-gzGzoHsz",
+            appKey: "bUBVJRNLJkRu01OoaKLj4YFF",
+            avatar: "retro",
+            placeholder: "o(ﾉ≧∀≦)o来啊，快活啊!",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
 
 
 
