@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
     
 <!-- Google Analytics -->
 <script>
@@ -8,7 +8,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 ga('create', 'UA-116739796-1', 'auto');
 ga('send', 'pageview');
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
 <!-- End Google Analytics -->
 
 
@@ -39,14 +39,14 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="蘑菇屋">
 <meta property="og:description" content="Mybatis 初始化过程  Mybatis的初始化就是将Mybatis的配置信息加载到Configuration这个类中，以便后面的使用。  Mybatis的初始化流程，下面是一段Mybatis从加载配置到执行SQL语句的完整过程的代码(该代码来自Mybatis的测试类)">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://orw70g1os.bkt.clouddn.com/1521025129.png">
+<meta property="og:image" content="http://img.xiaomogu.me/1521025129.png">
 <meta property="og:image" content="http://orw70g1os.bkt.clouddn.com/1521026253.png">
-<meta property="og:image" content="http://orw70g1os.bkt.clouddn.com/1521026596.png">
-<meta property="og:updated_time" content="2018-03-19T14:29:45.096Z">
+<meta property="og:image" content="http://img.xiaomogu.me/1521026596.png">
+<meta property="og:updated_time" content="2018-12-26T14:58:14.857Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mybatis 初始化过程">
 <meta name="twitter:description" content="Mybatis 初始化过程  Mybatis的初始化就是将Mybatis的配置信息加载到Configuration这个类中，以便后面的使用。  Mybatis的初始化流程，下面是一段Mybatis从加载配置到执行SQL语句的完整过程的代码(该代码来自Mybatis的测试类)">
-<meta name="twitter:image" content="http://orw70g1os.bkt.clouddn.com/1521025129.png">
+<meta name="twitter:image" content="http://img.xiaomogu.me/1521025129.png">
     
         <link rel="alternate" type="application/atom+xml" title="蘑菇屋" href="/atom.xml">
     
@@ -62,7 +62,7 @@ ga('send', 'pageview');
 <body>
     <div id="loading" class="active"></div>
 
-    <aside id="menu" class="hide" >
+    <aside id="menu" class="hide">
   <div class="inner flex-row-vertical">
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
@@ -82,35 +82,35 @@ ga('send', 'pageview');
       <ul class="nav">
         
             <li class="waves-block waves-effect">
-              <a href="/"  >
+              <a href="/">
                 <i class="icon icon-lg icon-home"></i>
                 主页
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/archives"  >
+              <a href="/archives">
                 <i class="icon icon-lg icon-archives"></i>
                 存档
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/tags"  >
+              <a href="/tags">
                 <i class="icon icon-lg icon-tags"></i>
                 标签
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/categories"  >
+              <a href="/categories">
                 <i class="icon icon-lg icon-th-list"></i>
                 分类
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="https://github.com/sunaowei" target="_blank" >
+              <a href="https://github.com/sunaowei" target="_blank">
                 <i class="icon icon-lg icon-github"></i>
                 Github
               </a>
@@ -133,7 +133,7 @@ ga('send', 'pageview');
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -172,13 +172,12 @@ ga('send', 'pageview');
 <div class="container body-wrap">
     
 
-<article id="post-Mybatis 初始化过程"
-  class="post-article article-type-post fade" itemprop="blogPost">
+<article id="post-Mybatis 初始化过程" class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
         <h1 class="post-card-title">Mybatis 初始化过程</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-03-19 14:27:59" datetime="2018-03-19T06:27:59.401Z"  itemprop="datePublished">2018-03-19</time>
+            <time class="post-time" title="2018-03-19 14:27:59" datetime="2018-03-19T06:27:59.401Z" itemprop="datePublished">2018-03-19</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Mybatis/">Mybatis</a></li></ul>
@@ -186,7 +185,7 @@ ga('send', 'pageview');
 
 
             
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
     <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
 </span>
 
@@ -200,7 +199,7 @@ ga('send', 'pageview');
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="http://orw70g1os.bkt.clouddn.com/1521025129.png" alt="Mybatis测试代码1" title="">
+                    <img src="http://img.xiaomogu.me/1521025129.png" alt="Mybatis测试代码1" title="">
                 </div>
                 <div class="image-caption">Mybatis测试代码1</div>
             </figure>
@@ -217,7 +216,7 @@ ga('send', 'pageview');
                 </div>
                 <div class="image-caption">SqlSessionFactoryBuilder</div>
             </figure>该类提供了许多重载的方法供我们选择。</p>
-<p><img src="http://orw70g1os.bkt.clouddn.com/1521026596.png" alt=""></p>
+<p><img src="http://img.xiaomogu.me/1521026596.png" alt=""></p>
 <p>此类的核心就是将我们传入的<code>Reader</code>或者<code>InputStream</code>通过<code>XMLConfigBuilder</code>类的<code>parse</code>方法，构造成<code>Configuration</code>，然后通过第91行的build方法，构造一个<code>SqlSessionFactory</code>并返回。</p>
 </li>
 <li><p>配置文件解析过程</p>
@@ -240,7 +239,7 @@ ga('send', 'pageview');
 <li><p>都创建完了，我们再回到真正执行<code>XMLConfigBuilder</code>创建的方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">XMLConfigBuilder</span><span class="params">(XPathParser parser, String environment, Properties props)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 通过父类调用Configuration的无参构造方法</span></span><br><span class="line">  <span class="keyword">super</span>(<span class="keyword">new</span> Configuration());</span><br><span class="line">  ErrorContext.instance().resource(<span class="string">"SQL Mapper Configuration"</span>);</span><br><span class="line">  <span class="keyword">this</span>.configuration.setVariables(props);</span><br><span class="line">  <span class="comment">// 确保只执行一次，调用parse()方法时，会将其设置为true</span></span><br><span class="line">  <span class="keyword">this</span>.parsed = <span class="keyword">false</span>;</span><br><span class="line">  <span class="keyword">this</span>.environment = environment;</span><br><span class="line">  <span class="comment">// 这个是重点，后面会用到</span></span><br><span class="line">  <span class="keyword">this</span>.parser = parser;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>至于<code>new Configuration()</code>具体干了啥，我们可以看一下源码。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Configuration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"JDBC"</span>, JdbcTransactionFactory.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"MANAGED"</span>, ManagedTransactionFactory.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"JNDI"</span>, JndiDataSourceFactory.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"POOLED"</span>, PooledDataSourceFactory.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"UNPOOLED"</span>, UnpooledDataSourceFactory.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"PERPETUAL"</span>, PerpetualCache.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"FIFO"</span>, FifoCache.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"LRU"</span>, LruCache.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"SOFT"</span>, SoftCache.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"WEAK"</span>, WeakCache.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"DB_VENDOR"</span>, VendorDatabaseIdProvider.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"XML"</span>, XMLLanguageDriver.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"RAW"</span>, RawLanguageDriver.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"SLF4J"</span>, Slf4jImpl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"COMMONS_LOGGING"</span>, JakartaCommonsLoggingImpl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"LOG4J"</span>, Log4jImpl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"LOG4J2"</span>, Log4j2Impl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"JDK_LOGGING"</span>, Jdk14LoggingImpl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"STDOUT_LOGGING"</span>, StdOutImpl.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"NO_LOGGING"</span>, NoLoggingImpl.class);</span><br><span class="line"></span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"CGLIB"</span>, CglibProxyFactory.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"JAVASSIST"</span>, JavassistProxyFactory.class);</span><br><span class="line"></span><br><span class="line">  languageRegistry.setDefaultDriverClass(XMLLanguageDriver.class);</span><br><span class="line">  languageRegistry.register(RawLanguageDriver.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Configuration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"JDBC"</span>, JdbcTransactionFctory.class);</span><br><span class="line">  typeAliasRegistry.registerAlias(<span class="string">"MANAGED"</span><span class="string">", ManagedTransactionFactory.class);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>JNDI<span class="string">", JndiDataSourceFactory.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>POOLED<span class="string">", PooledDataSourceFactory.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>UNPOOLED<span class="string">", UnpooledDataSourceFactory.class);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>PERPETUAL<span class="string">", PerpetualCache.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>FIFO<span class="string">", FifoCache.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>LRU<span class="string">", LruCache.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>SOFT<span class="string">", SoftCache.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>WEAK<span class="string">", WeakCache.class);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>DB_VENDOR<span class="string">", VendorDatabaseIdProvider.class);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>XML<span class="string">", XMLLanguageDriver.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>RAW<span class="string">", RawLanguageDriver.class);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>SLF4J<span class="string">", Slf4jImpl.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>COMMONS_LOGGING<span class="string">", JakartaCommonsLoggingImpl.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>LOG4J<span class="string">", Log4jImpl.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>LOG4J2<span class="string">", Log4j2Impl.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>JDK_LOGGING<span class="string">", Jdk14LoggingImpl.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>STDOUT_LOGGING<span class="string">", StdOutImpl.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>NO_LOGGING<span class="string">", NoLoggingImpl.class);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>CGLIB<span class="string">", CglibProxyFactory.class);</span></span><br><span class="line"><span class="string">  typeAliasRegistry.registerAlias("</span>JAVASSIST<span class="string">", JavassistProxyFactory.class);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  languageRegistry.setDefaultDriverClass(XMLLanguageDriver.class);</span></span><br><span class="line"><span class="string">  languageRegistry.register(RawLanguageDriver.class);</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
 <p>我们可以看到，这个无参的构造方法主要是注册了一系列的别名，这个我们另行分析，我们先往下看。</p>
 </li>
 <li><p><code>XMLConfigBuilder</code>实例化完成以后就是调用其parse()方法完成一系列配置文件的解析，和对Configuration的装配。</p>
@@ -260,7 +259,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-03-19T14:29:45.096Z" itemprop="dateUpdated">2018-03-19 22:29:45</time>
+    最終更新：<time datetime="2018-12-26T14:58:14.857Z" itemprop="dateUpdated">2018-12-26 22:58:14</time>
 </span><br>
 
 
@@ -416,8 +415,7 @@ ga('send', 'pageview');
         </div>
         
         <label class="reward-toggle">
-            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechat">微信</span>
                 <span class="reward-toggle-label"></span>
@@ -436,10 +434,10 @@ ga('send', 'pageview');
     <div class="top">
         
 <p>
-    <span id="busuanzi_container_site_uv" style='display:none'>
+    <span id="busuanzi_container_site_uv" style="display:none">
         站点总访客数：<span id="busuanzi_value_site_uv"></span>
     </span>
-    <span id="busuanzi_container_site_pv" style='display:none'>
+    <span id="busuanzi_container_site_pv" style="display:none">
         站点总访问量：<span id="busuanzi_value_site_pv"></span>
     </span>
 </p>
@@ -449,7 +447,7 @@ ga('send', 'pageview');
             
                 <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
-            <span>This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+            <span>このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
         </p>
     </div>
     <div class="bottom">
