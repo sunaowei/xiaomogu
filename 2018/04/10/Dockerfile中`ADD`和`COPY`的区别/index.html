@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
     
 <!-- Google Analytics -->
 <script>
@@ -8,7 +8,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 ga('create', 'UA-116739796-1', 'auto');
 ga('send', 'pageview');
 </script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 <!-- End Google Analytics -->
 
 
@@ -35,7 +35,7 @@ ga('send', 'pageview');
 <meta name="keywords" content="Docker,Dockerfile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dockerfile中`ADD`和`COPY`的区别">
-<meta property="og:url" content="http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/index.html">
+<meta property="og:url" content="https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/index.html">
 <meta property="og:site_name" content="蘑菇屋">
 <meta property="og:description" content="Dockerfile中ADD和COPY的区别 本文来自Best practices for writing Dockerfiles  建议编写Dockerfile前先熟读上文 Dockerfile 中提供了两种复制文件的方式：ADD和COPY，这两种方式有什么区别呢？这两者分别在什么时候使用呢? ADD和COPY功能相似，COPY是首选。因为它比ADD更加透明.COPY仅支持基础的本地文件拷贝到容">
 <meta property="og:locale" content="zh_CN">
@@ -58,7 +58,7 @@ ga('send', 'pageview');
 <body>
     <div id="loading" class="active"></div>
 
-    <aside id="menu" class="hide">
+    <aside id="menu" class="hide" >
   <div class="inner flex-row-vertical">
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
@@ -78,35 +78,35 @@ ga('send', 'pageview');
       <ul class="nav">
         
             <li class="waves-block waves-effect">
-              <a href="/">
+              <a href="/"  >
                 <i class="icon icon-lg icon-home"></i>
                 主页
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/archives">
+              <a href="/archives"  >
                 <i class="icon icon-lg icon-archives"></i>
                 存档
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/tags">
+              <a href="/tags"  >
                 <i class="icon icon-lg icon-tags"></i>
                 标签
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/categories">
+              <a href="/categories"  >
                 <i class="icon icon-lg icon-th-list"></i>
                 分类
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="https://github.com/sunaowei" target="_blank">
+              <a href="https://github.com/sunaowei" target="_blank" >
                 <i class="icon icon-lg icon-github"></i>
                 Github
               </a>
@@ -168,12 +168,13 @@ ga('send', 'pageview');
 <div class="container body-wrap">
     
 
-<article id="post-Dockerfile中`ADD`和`COPY`的区别" class="post-article article-type-post fade" itemprop="blogPost">
+<article id="post-Dockerfile中`ADD`和`COPY`的区别"
+  class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
         <h1 class="post-card-title">Dockerfile中`ADD`和`COPY`的区别</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-04-10 17:34:54" datetime="2018-04-10T09:34:54.000Z" itemprop="datePublished">2018-04-10</time>
+            <time class="post-time" title="2018-04-10 17:34:54" datetime="2018-04-10T09:34:54.000Z"  itemprop="datePublished">2018-04-10</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Docker/">Docker</a></li></ul>
@@ -181,7 +182,7 @@ ga('send', 'pageview');
 
 
             
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
     <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
 </span>
 
@@ -215,7 +216,7 @@ ga('send', 'pageview');
     </div>
     
     <footer>
-        <a href="http://xiaomogu.me">
+        <a href="https://xiaomogu.me">
             <img src="/img/avatar.jpg" alt="树荫小蘑菇">
             树荫小蘑菇
         </a>
@@ -241,7 +242,7 @@ ga('send', 'pageview');
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&pic=https://xiaomogu.me/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -251,22 +252,22 @@ ga('send', 'pageview');
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&via=http://xiaomogu.me" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&url=https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&via=https://xiaomogu.me" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -363,7 +364,8 @@ ga('send', 'pageview');
         </div>
         
         <label class="reward-toggle">
-            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechat">微信</span>
                 <span class="reward-toggle-label"></span>
@@ -382,10 +384,10 @@ ga('send', 'pageview');
     <div class="top">
         
 <p>
-    <span id="busuanzi_container_site_uv" style="display:none">
+    <span id="busuanzi_container_site_uv" style='display:none'>
         站点总访客数：<span id="busuanzi_value_site_uv"></span>
     </span>
-    <span id="busuanzi_container_site_pv" style="display:none">
+    <span id="busuanzi_container_site_pv" style='display:none'>
         站点总访问量：<span id="busuanzi_value_site_pv"></span>
     </span>
 </p>
@@ -419,7 +421,7 @@ ga('send', 'pageview');
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&pic=http://xiaomogu.me/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&pic=https://xiaomogu.me/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -429,22 +431,22 @@ ga('send', 'pageview');
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&title=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&source=小蘑菇的blog" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&via=http://xiaomogu.me" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Dockerfile中`ADD`和`COPY`的区别》 — 蘑菇屋&url=https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/&via=https://xiaomogu.me" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://xiaomogu.me/2018/04/10/Dockerfile中`ADD`和`COPY`的区别/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -455,7 +457,7 @@ ga('send', 'pageview');
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACt0lEQVR42u3a0WojMQwF0P7/T2dhnxaWTu6V7JLCmaeSBI+PC5aQ9PUVP6+/z3d///tJvtr/z/O37Vu+8PDw8K7xkuW++yT59vmYcszwCPDw8PCu8dqtPK/QXuXt1pM94+Hh4X0Cr6U+/ybZbrIfPDw8vN/CS1aYFS82x4GHh4f3k7w2hX3e6CYFT471Sq0FDw8P70IX6XP+/tH+Hh4eHl4cEmaXdZ5k52n6a/Tg4eHh3eDl6Wx+9+Ypdbv+8Jd4eHh4l3ntJZ4HjxzZFjje/GPw8PDwrvHaxlX+sqSAOxsRiN6Oh4eHd4F3alBgHwzaEFXsEA8PD+8ary3LtqXbdsQqLwe/KVjg4eHhHeLNAJtW2WZMqi4N4+Hh4V3g5WXZtil1aqSg3WH0P8TDw8Nb8DYF3LMlhra1FpVL8PDw8C7z8iVmgSFvVu3T7uLk8PDw8Ereplk1a+0niXW+9Shxx8PDwzvKa1tW7WWdhIQkDLRDXXh4eHj3eLNywKbN3xY+klT7TeDBw8PDO8rblxvaMYLZpZ8XLL6Ne3h4eHhHeW17aTYQkB/cqQQdDw8P7zYvQW4Yw3x/M7aFh4eHd4HXlm737bH8233hGA8PD+8eb3NB54NTz5tok+yiZIyHh4d3jZe/uCgHxKElmQ4bHjceHh7eUV6y0QSQF3mTonA7BBbVWvDw8PCu8faJb35A+abbEBUVXvDw8PBGvPZqfmbkyXGyzixg4OHh4d3mvconHyPYdOE2oeXNZAQeHh7emjdrOOVJcBGXghR5swc8PDy8s7w2GGyKv23Bt12tTqzx8PDwFrxZE2tWbpiNDuSBBw8PD+9zeMklngeDZIhqUwLGw8PD+xzerNmflBLaN0af4+Hh4V3jzZpep6rF7SBCXvzFw8PDu8GbNcBODRxsfrMfYsDDw8MreX8AABENAVYreK4AAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuElEQVR42u3awW7jMAwE0Pz/T3eBnroHZ2cocZvD86lIU0tPBUxjyNcrvr6+r+Tz2Tff/9XP67Vx4eHh4Y22/nTlyySA5G+f7vN+P4/3x8PDw1vj5Us+LdYWhvfsk0KCh4eH9zm8vFTkn68fIh4eHt4H8PJX56NX4bfr4uHh4X0CL9lW+7LbhrztnS9nLXh4eHjdE7hogH3Cz4v9PTw8PLyDrnrbGGuHD9r71DvEw8PDW+DNQofkRbY9iPyA8qgXDw8Pb4/XNqjaGPfW5s6LEx4eHt5d3klT//1Lc9u4ancSFRg8PDy8S7zZwnkrqx0LuBWL/JW14OHh4S3w9h7x+eDUbHwhKgx4eHh4C7x8WwkyOZp2QGHYQsPDw8Nb4J008pNwNo9lk8d93njDw8PD2+O1t86b/W3wmpecIjTBw8PDW+Dl7fl2RODk1flWkIGHh4e3wTsZhJo9pmcNrdkoAx4eHt4er936eUxwUmByNh4eHt42L1+yfY2+OyJQ7BkPDw9vgZeMTOWNrqMBqTIKaQe/8PDw8G7x8lb9+ZBB/tCfhciPM2V4eHh4y7y7222j4bxJFoXIeHh4eAu88yZ9PpvQFpj26P8RRuDh4eFd4p3EBwlmVnLaptrjvwQPDw/vl3htAWi3mFewfMVrowN4eHh4wf3zIYC8DTZr9rfhRfRNPDw8vGPe1+jKl5nFE8kRR80zPDw8vAVeu6GTJtlJQPyKr8fv4+Hh4V3ibZSE5DjaCGMYUuDh4eEt8GYP3KRs5NFGXn7ydl1NxcPDwyt5STGYPaZnwe55DIGHh4f3f3h5MchjhbzMDOtVHuDi4eHh/SqvHTI4Oab8RfxaYcDDw8O7ymu3nh/N7Aii/h4eHh7eGq8NEfKphPz+ObUuDHh4eHhXeSezWu+XmX0ya3QdDRDg4eHhpb/9Ay39QQVLbzP9AAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
