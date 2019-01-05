@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.8.0">
     
 <!-- Google Analytics -->
 <script>
@@ -8,7 +8,7 @@ window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
 ga('create', 'UA-116739796-1', 'auto');
 ga('send', 'pageview');
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
 <!-- End Google Analytics -->
 
 
@@ -39,7 +39,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="蘑菇屋">
 <meta property="og:description" content="Dockerfile中ADD和COPY的区别 本文来自Best practices for writing Dockerfiles  建议编写Dockerfile前先熟读上文 Dockerfile 中提供了两种复制文件的方式：ADD和COPY，这两种方式有什么区别呢？这两者分别在什么时候使用呢? ADD和COPY功能相似，COPY是首选。因为它比ADD更加透明.COPY仅支持基础的本地文件拷贝到容">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2018-04-10T09:35:34.323Z">
+<meta property="og:updated_time" content="2018-04-10T09:35:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dockerfile中`ADD`和`COPY`的区别">
 <meta name="twitter:description" content="Dockerfile中ADD和COPY的区别 本文来自Best practices for writing Dockerfiles  建议编写Dockerfile前先熟读上文 Dockerfile 中提供了两种复制文件的方式：ADD和COPY，这两种方式有什么区别呢？这两者分别在什么时候使用呢? ADD和COPY功能相似，COPY是首选。因为它比ADD更加透明.COPY仅支持基础的本地文件拷贝到容">
@@ -58,7 +58,7 @@ ga('send', 'pageview');
 <body>
     <div id="loading" class="active"></div>
 
-    <aside id="menu" class="hide" >
+    <aside id="menu" class="hide">
   <div class="inner flex-row-vertical">
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
@@ -78,35 +78,35 @@ ga('send', 'pageview');
       <ul class="nav">
         
             <li class="waves-block waves-effect">
-              <a href="/"  >
+              <a href="/">
                 <i class="icon icon-lg icon-home"></i>
                 主页
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/archives"  >
+              <a href="/archives">
                 <i class="icon icon-lg icon-archives"></i>
                 存档
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/tags"  >
+              <a href="/tags">
                 <i class="icon icon-lg icon-tags"></i>
                 标签
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="/categories"  >
+              <a href="/categories">
                 <i class="icon icon-lg icon-th-list"></i>
                 分类
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="https://github.com/sunaowei" target="_blank" >
+              <a href="https://github.com/sunaowei" target="_blank">
                 <i class="icon icon-lg icon-github"></i>
                 Github
               </a>
@@ -168,13 +168,12 @@ ga('send', 'pageview');
 <div class="container body-wrap">
     
 
-<article id="post-Dockerfile中`ADD`和`COPY`的区别"
-  class="post-article article-type-post fade" itemprop="blogPost">
+<article id="post-Dockerfile中`ADD`和`COPY`的区别" class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
         <h1 class="post-card-title">Dockerfile中`ADD`和`COPY`的区别</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-04-10 17:34:54" datetime="2018-04-10T09:34:54.000Z"  itemprop="datePublished">2018-04-10</time>
+            <time class="post-time" title="2018-04-10 17:34:54" datetime="2018-04-10T09:34:54.000Z" itemprop="datePublished">2018-04-10</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Docker/">Docker</a></li></ul>
@@ -182,7 +181,7 @@ ga('send', 'pageview');
 
 
             
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
     <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
 </span>
 
@@ -208,7 +207,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-04-10T09:35:34.323Z" itemprop="dateUpdated">2018-04-10 17:35:34</time>
+    Last updated: <time datetime="2018-04-10T09:35:34.000Z" itemprop="dateUpdated">2018-04-10 17:35:34</time>
 </span><br>
 
 
@@ -364,8 +363,7 @@ ga('send', 'pageview');
         </div>
         
         <label class="reward-toggle">
-            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechat">微信</span>
                 <span class="reward-toggle-label"></span>
@@ -384,10 +382,10 @@ ga('send', 'pageview');
     <div class="top">
         
 <p>
-    <span id="busuanzi_container_site_uv" style='display:none'>
+    <span id="busuanzi_container_site_uv" style="display:none">
         站点总访客数：<span id="busuanzi_value_site_uv"></span>
     </span>
-    <span id="busuanzi_container_site_pv" style='display:none'>
+    <span id="busuanzi_container_site_pv" style="display:none">
         站点总访问量：<span id="busuanzi_value_site_pv"></span>
     </span>
 </p>
